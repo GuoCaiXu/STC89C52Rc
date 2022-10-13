@@ -1,0 +1,243 @@
+C51 COMPILER V9.60.0.0   MAIN                                                              10/12/2022 21:40:44 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\main
+                    -.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          # include <reg52.h>
+   2          # define uchar unsigned char
+   3          # define ulong unsigned long
+   4          
+   5          sbit ADDR0 = P1^0;
+   6          sbit ADDR1 = P1^1;
+   7          sbit ADDR2 = P1^2;
+   8          sbit ADDR3 = P1^3;
+   9          sbit ENLED = P1^4;
+  10          
+  11          sbit KeyOut4 = P2^0;
+  12          sbit KeyOut3 = P2^1;
+  13          sbit KeyOut2 = P2^2;
+  14          sbit KeyOut1 = P2^3;
+  15          sbit KeyIn1 = P2^4;
+  16          sbit KeyIn2 = P2^5;
+  17          sbit KeyIn3 = P2^6;
+  18          sbit KeyIn4 = P2^7;
+  19          
+  20          //蜂鸣器
+  21          sbit BUZZ = P1^6;
+  22          
+  23          uchar code LedChar[] = {  //数码管显示字符转换表
+  24              0xC0, 0xF9, 0xA4, 0xB0, 0x99, 0x92, 0x82, 0xF8,
+  25              0x80, 0x90
+  26          };
+  27          
+  28          uchar code KeyCodeMap[4][4] = {  //矩阵按键编号与ascll表对应
+  29            {0x31, 0x32, 0x33, 0x2b},  //数字键1， 数字键2， 数字键3， 加法
+  30            {0x34, 0x35, 0x36, 0x2f},  //数字键4， 数字键5， 数字键6， 除法
+  31            {0x37, 0x38, 0x39, 0x2a},  //数字键7， 数字键8， 数字键9， 乘法
+  32            {0x30, 0x1b, 0x0d, 0x2d}   //数字键0， 清空， 回车(等于)， 减法
+  33          };
+  34          
+  35          //数码管缓冲区
+  36          uchar LedBuff[6] = {
+  37            0xff, 0xff, 0xff, 0xff, 0xff, 0xff
+  38          };
+  39          
+  40          uchar KeySta[4][4] = {  //全部按键的当前状态
+  41            {1,1,1,1},{1,1,1,1},
+  42            {1,1,1,1},{1,1,1,1}
+  43          };
+  44          
+  45          void KeyDirver();  //驱动按键
+  46          
+  47          void main(){
+  48   1      
+  49   1        ENLED = 0;
+  50   1        ADDR3 = 1;
+  51   1        EA = 1;  //使能总中断开关 1开启
+  52   1        TMOD = 0x01;  //工作模式1
+  53   1        
+  54   1        //fc66是0.001s, 也就是1毫秒
+C51 COMPILER V9.60.0.0   MAIN                                                              10/12/2022 21:40:44 PAGE 2   
+
+  55   1        TH0 = 0xfc;
+  56   1        TL0 = 0x66;
+  57   1      
+  58   1        ET0 = 1;  //定时器T0中断开关 1开启
+  59   1        TR0 = 1;  //定时器T0开关 1开启
+  60   1        LedBuff[0] = LedChar[0];
+  61   1      
+  62   1        while(1){
+  63   2          KeyDirver();
+  64   2        }
+  65   1      }
+  66          
+  67          void ShowNumber(ulong num){
+  68   1      
+  69   1        signed char i;
+  70   1        uchar arr[6];
+  71   1        for (i = 0; i < 6; i++){
+  72   2          arr[i] = num % 10;
+  73   2          num /= 10;
+  74   2        }
+  75   1        for (i = 5; i >= 1; i--){
+  76   2          if (arr[i] == 0){
+  77   3            LedBuff[i] = 0xff;
+  78   3          }else{
+  79   3            break;
+  80   3          }
+  81   2        }
+  82   1        for (;i >= 0; i--){
+  83   2          LedBuff[i] = LedChar[arr[i]];
+  84   2        }
+  85   1      }
+  86          
+  87          void KeyAction(uchar Keycode){
+  88   1      
+  89   1        static ulong result = 0;
+  90   1        static ulong addend = 0;
+  91   1        static char choose = 0;
+  92   1      
+  93   1      //输入数字
+  94   1        if (Keycode >= 0x30 && Keycode <= 0x39){
+  95   2          addend = (addend*10) + (Keycode - 0x30);
+  96   2          ShowNumber(addend);
+  97   2        }
+  98   1        //加法
+  99   1        else if (Keycode == 0x2b || Keycode == 0x2d || Keycode == 0x2a || Keycode == 0x2f){
+ 100   2          result += addend;
+ 101   2          addend = 0;
+ 102   2          if (Keycode == 0x2b) choose = 1;  //加法
+ 103   2          else if (Keycode == 0x2d) choose = 2;  //减法
+ 104   2          else if (Keycode == 0x2a) choose = 3;  //乘法
+ 105   2          else if (Keycode == 0x2f) choose = 4;  //除法
+ 106   2      
+ 107   2          ShowNumber(result);
+ 108   2        }
+ 109   1        //运算结果
+ 110   1        else if (Keycode == 0x0d){
+ 111   2          switch(choose){
+ 112   3            case 1: result += addend; addend = 0; choose = 0; break;
+ 113   3            case 2: result -= addend; addend = 0; choose = 0; break;
+ 114   3            case 3: result *= addend; addend = 0; choose = 0; break;
+ 115   3            case 4: result /= addend; addend = 0; choose = 0; break;
+ 116   3      
+C51 COMPILER V9.60.0.0   MAIN                                                              10/12/2022 21:40:44 PAGE 3   
+
+ 117   3          }
+ 118   2          ShowNumber(result);
+ 119   2        }
+ 120   1        else if(Keycode == 0x1b){
+ 121   2          result = 0;
+ 122   2          addend = 0;
+ 123   2          ShowNumber(addend);
+ 124   2        }
+ 125   1      }
+ 126          
+ 127          //驱动函数， 检测按键动作
+ 128          void KeyDirver(){
+ 129   1      
+ 130   1        static uchar KeyBac[4][4] = {
+ 131   1          {1,1,1,1},{1,1,1,1},
+ 132   1          {1,1,1,1},{1,1,1,1}
+ 133   1        };
+ 134   1      
+ 135   1        uchar i, j;
+ 136   1      
+ 137   1        for (i = 0; i < 4; i++){
+ 138   2          for (j = 0; j < 4; j++){
+ 139   3      
+ 140   3            if (KeyBac[i][j] != KeySta[i][j]){
+ 141   4              if (KeyBac[i][j] != 0){
+ 142   5                KeyAction(KeyCodeMap[i][j]);
+ 143   5              }
+ 144   4              KeyBac[i][j] = KeySta[i][j];
+ 145   4            }
+ 146   3          }
+ 147   2        }
+ 148   1      }
+ 149          
+ 150          //判断按键是否按下
+ 151          void KeyScan(){
+ 152   1      
+ 153   1        uchar i;
+ 154   1        static uchar KeyOut = 0;
+ 155   1        static uchar KeyBuf[4][4] = {
+ 156   1          {0xff,0xff,0xff,0xff},
+ 157   1          {0xff,0xff,0xff,0xff},
+ 158   1          {0xff,0xff,0xff,0xff},
+ 159   1          {0xff,0xff,0xff,0xff}
+ 160   1        };
+ 161   1      
+ 162   1        KeyBuf[KeyOut][0] = (KeyBuf[KeyOut][0] << 1) | KeyIn1;
+ 163   1        KeyBuf[KeyOut][1] = (KeyBuf[KeyOut][1] << 1) | KeyIn2;
+ 164   1        KeyBuf[KeyOut][2] = (KeyBuf[KeyOut][2] << 1) | KeyIn3;
+ 165   1        KeyBuf[KeyOut][3] = (KeyBuf[KeyOut][3] << 1) | KeyIn4;
+ 166   1      
+ 167   1        for (i = 0; i < 4; i++){
+ 168   2          if ((KeyBuf[KeyOut][i] & 0x0f) == 0x00){
+ 169   3            BUZZ = 0;
+ 170   3            KeySta[KeyOut][i] = 0;
+ 171   3          }
+ 172   2          if ((KeyBuf[KeyOut][i] & 0x0f) == 0x0f){
+ 173   3            KeySta[KeyOut][i] = 1;
+ 174   3            BUZZ = 1;
+ 175   3          }
+ 176   2        }
+ 177   1      
+ 178   1        KeyOut++;
+C51 COMPILER V9.60.0.0   MAIN                                                              10/12/2022 21:40:44 PAGE 4   
+
+ 179   1        KeyOut &= 0x03;
+ 180   1      
+ 181   1        switch(KeyOut){
+ 182   2          case 0: KeyOut1 = 0; KeyOut4 = 1; break;
+ 183   2          case 1: KeyOut2 = 0; KeyOut1 = 1; break;
+ 184   2          case 2: KeyOut3 = 0; KeyOut2 = 1; break;
+ 185   2          case 3: KeyOut4 = 0; KeyOut3 = 1; break;
+ 186   2        }
+ 187   1      }
+ 188          
+ 189          //显示数码管
+ 190          void LedScan(){
+ 191   1      
+ 192   1        static uchar i = 0;
+ 193   1      
+ 194   1        P0 = 0xff;
+ 195   1        switch(i){
+ 196   2          case 0: ADDR0 = 0; ADDR1 = 0; ADDR2 = 0; i++; P0 = LedBuff[0]; break;
+ 197   2          case 1: ADDR0 = 1; ADDR1 = 0; ADDR2 = 0; i++; P0 = LedBuff[1]; break;
+ 198   2          case 2: ADDR0 = 0; ADDR1 = 1; ADDR2 = 0; i++; P0 = LedBuff[2]; break;
+ 199   2          case 3: ADDR0 = 1; ADDR1 = 1; ADDR2 = 0; i++; P0 = LedBuff[3]; break;
+ 200   2          case 4: ADDR0 = 0; ADDR1 = 0; ADDR2 = 1; i++; P0 = LedBuff[4]; break;
+ 201   2          case 5: ADDR0 = 1; ADDR1 = 0; ADDR2 = 1; i=0; P0 = LedBuff[5]; break;
+ 202   2          default: break;
+ 203   2        }
+ 204   1      }
+ 205          
+ 206          //中断函数
+ 207          void InterruptTime0() interrupt 1{
+ 208   1      
+ 209   1        TH0 = 0xfc;
+ 210   1        TL0 = 0x66;
+ 211   1        LedScan();
+ 212   1        KeyScan();
+ 213   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1064    ----
+   CONSTANT SIZE    =     26    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     65      14
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
