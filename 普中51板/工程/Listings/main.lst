@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   MAIN                                                              10/14/2022 22:20:34 PAGE 1   
+C51 COMPILER V9.60.0.0   MAIN                                                              10/15/2022 14:17:35 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MAIN
@@ -8,107 +8,62 @@ COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE 
 
 line level    source
 
-   1          #include "reg52.h"
+   1          # include <reg52.h>
    2          # define uint unsigned int
    3          # define uchar unsigned char
-   4          # define ulong unsigned long
-   5          
-   6          sbit Key1 = P3^1;
-   7          
-   8          sbit ADDR0 = P2^2;
-   9          sbit ADDR1 = P2^3;
-  10          sbit ADDR2 = P2^4;
-  11          
-  12          uchar code LedChar[] = {0x3f,0x06,0x5b,0x4f,0x66,0x6d,0x7d,0x07,0x7f,0x6f};
-  13          uchar LedBuff[] =      {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
-  14          
-  15          uchar KeySta = 1;
-  16          ulong num = 2;
-  17          
-  18          void KeyDriver(uchar KeyBac);
-  19          void main(){
-  20   1      
-  21   1      uchar KeyBac = 1;
-  22   1          EA = 1;
-  23   1          TMOD = 0x01;
-  24   1          TH0 = 0xfc;
-  25   1          TL0 = 0x66;
-  26   1          ET0 = 1;
-  27   1          TR0 = 1;
-  28   1          //LedBuff[0] = LedChar[0];
-  29   1          while(1){
-  30   2      
-  31   2             KeyDriver(KeyBac);
-  32   2          }
-  33   1      }
-  34          
-  35          void KeyAction(){
-  36   1          uchar i;
-  37   1          uchar arr[8];
-  38   1          for (i = 0; i < 8; i++){
-  39   2              arr[i] = num % 10;
-  40   2              num /= 10;
+   4          
+   5          sbit SRCLK = P3^6;
+   6          sbit FRCLK = P3^5;
+   7          sbit SER = P3^4;
+   8          
+   9          uchar falg = 0;
+  10          
+  11          void main(){
+  12   1      
+  13   1          EA = 1;
+  14   1          TMOD = 0x01;
+  15   1          TH0 = 0xfc;
+  16   1          TL0 = 0x66;
+  17   1          ET0 = 1;
+  18   1          TR0 = 0;
+  19   1      
+  20   1          P0 = 0x7f;
+  21   1      
+  22   1          while(1){
+  23   2              if (falg ==1){
+  24   3                  falg == 0;
+*** WARNING C275 IN LINE 24 OF main.c: expression with possibly no effect
+  25   3                  if (P0 == 0xfe){
+  26   4                  P0 = P0 << 1;
+  27   4              }
+  28   3                  P0 = P0 >> 1;
+  29   3              }
+  30   2          }
+  31   1      }
+  32          
+  33          void InterruptTime0() interrupt 1{
+  34   1          static uint cnt = 0;
+  35   1          TH0 = 0xfc;
+  36   1          TL0 = 0x66;
+  37   1          cnt++;
+  38   1          if (cnt >= 100){
+  39   2              cnt = 0;
+  40   2              falg = 1;
   41   2          }
-  42   1          for (i = 7; i >= 1; i--){
-  43   2              if (arr[i] == 0) {LedBuff[i] = 0x00;}
-  44   2              else {break;}
-  45   2          }
-  46   1          for (; i >= 0; i--){
-  47   2             LedBuff[i] = LedChar[arr[i]];
-  48   2          }
-  49   1      }
-  50          
-  51          void KeyDriver(uchar KeyBac){
-  52   1      
-  53   1          if (KeySta != KeyBac){
-  54   2              if (KeyBac == 0){
-C51 COMPILER V9.60.0.0   MAIN                                                              10/14/2022 22:20:34 PAGE 2   
-
-  55   3                  num++;
-  56   3                  KeyAction();
-  57   3              }
-  58   2              KeyBac = KeySta;
-  59   2          }
-  60   1      }
-  61          
-  62          void InterruptTime0() interrupt 1{
-  63   1      
-  64   1          static uchar i = 0;
-  65   1      
-  66   1          TH0 = 0xfc;
-  67   1          TL0 = 0x66; 
-  68   1          
-  69   1           if (Key1 == 0){
-  70   2              KeySta = 0;
-  71   2           }
-  72   1           else if (Key1 == 1){
-  73   2              KeySta = 1;
-  74   2           }
-  75   1           
-  76   1           P0 = 0x00;
-  77   1           switch (i){
-  78   2              case 0: ADDR0 = 0; ADDR1 = 0; ADDR2 = 0; i++; P0 = LedBuff[0]; break;
-  79   2              case 1: ADDR0 = 1; ADDR1 = 0; ADDR2 = 0; i++; P0 = LedBuff[1]; break;
-  80   2              case 2: ADDR0 = 0; ADDR1 = 1; ADDR2 = 0; i++; P0 = LedBuff[2]; break;
-  81   2              case 3: ADDR0 = 1; ADDR1 = 1; ADDR2 = 0; i++; P0 = LedBuff[3]; break;
-  82   2              case 4: ADDR0 = 0; ADDR1 = 0; ADDR2 = 1; i++; P0 = LedBuff[4]; break;
-  83   2              case 5: ADDR0 = 1; ADDR1 = 0; ADDR2 = 1; i++; P0 = LedBuff[5]; break;
-  84   2              case 6: ADDR0 = 0; ADDR1 = 1; ADDR2 = 1; i++; P0 = LedBuff[6]; break;
-  85   2              case 7: ADDR0 = 1; ADDR1 = 1; ADDR2 = 1; i=0; P0 = LedBuff[7]; break;
-  86   2              default: break;
-  87   2           }
-  88   1      }
+  42   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    387    ----
-   CONSTANT SIZE    =     10    ----
+   CODE SIZE        =     86    ----
+   CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =     14      11
+   DATA SIZE        =      3    ----
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
 
+C51 COMPILER V9.60.0.0   MAIN                                                              10/15/2022 14:17:35 PAGE 2   
 
-C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)
