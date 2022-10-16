@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   MAIN                                                              10/15/2022 14:17:35 PAGE 1   
+C51 COMPILER V9.60.0.0   MAIN                                                              10/16/2022 14:28:28 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MAIN
@@ -8,62 +8,41 @@ COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE 
 
 line level    source
 
-   1          # include <reg52.h>
-   2          # define uint unsigned int
-   3          # define uchar unsigned char
-   4          
-   5          sbit SRCLK = P3^6;
-   6          sbit FRCLK = P3^5;
-   7          sbit SER = P3^4;
-   8          
-   9          uchar falg = 0;
-  10          
-  11          void main(){
-  12   1      
-  13   1          EA = 1;
-  14   1          TMOD = 0x01;
-  15   1          TH0 = 0xfc;
-  16   1          TL0 = 0x66;
-  17   1          ET0 = 1;
-  18   1          TR0 = 0;
-  19   1      
-  20   1          P0 = 0x7f;
-  21   1      
-  22   1          while(1){
-  23   2              if (falg ==1){
-  24   3                  falg == 0;
-*** WARNING C275 IN LINE 24 OF main.c: expression with possibly no effect
-  25   3                  if (P0 == 0xfe){
-  26   4                  P0 = P0 << 1;
-  27   4              }
-  28   3                  P0 = P0 >> 1;
-  29   3              }
-  30   2          }
-  31   1      }
-  32          
-  33          void InterruptTime0() interrupt 1{
-  34   1          static uint cnt = 0;
-  35   1          TH0 = 0xfc;
-  36   1          TL0 = 0x66;
-  37   1          cnt++;
-  38   1          if (cnt >= 100){
-  39   2              cnt = 0;
-  40   2              falg = 1;
-  41   2          }
-  42   1      }
+   1          //外部中断0
+   2          # include <reg52.h>
+   3          
+   4          sbit KEY3 = P3^2;
+   5          sbit OUT1 = P1^0;
+   6          
+   7          void main(){
+   8   1      
+   9   1          EA = 1;  //打开总中断开关
+  10   1          EX0 = 1;  //开外部中断0
+  11   1          IT0 = 1; //打开外部中断
+  12   1          OUT1 = 0;
+  13   1      
+  14   1          while(1){
+  15   2      
+  16   2          }
+  17   1      }
+  18          
+  19          void init0() interrupt 0{
+  20   1      
+  21   1          if (KEY3 == 0){
+  22   2              OUT1 = !OUT1;
+  23   2          }
+  24   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =     86    ----
+   CODE SIZE        =     16    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =      3    ----
+   DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
 
-C51 COMPILER V9.60.0.0   MAIN                                                              10/15/2022 14:17:35 PAGE 2   
 
-
-C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
