@@ -27,7 +27,7 @@ ulong sec = 0;
 
         if (flag == 1){
             flag = 0;
-					  sec++;
+			sec++;
 					
             LedBuff[0] = LedChar[sec%10];
 			LedBuff[1] = LedChar[sec/10%10];
