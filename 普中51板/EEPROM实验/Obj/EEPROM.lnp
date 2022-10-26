@@ -1,0 +1,8 @@
+".\Obj\STARTUP.obj",
+".\Obj\main.obj",
+".\Obj\iic.obj",
+".\Obj\key.obj",
+".\Obj\smg.obj",
+".\Obj\public.obj" 
+TO ".\Obj\EEPROM" 
+PRINT(".\Obj\EEPROM.m51") RAMSIZE(256) 
