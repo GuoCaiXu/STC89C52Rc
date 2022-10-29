@@ -1,0 +1,9 @@
+".\Obj\STARTUP.obj",
+".\Obj\main.obj",
+".\Obj\at24c02.obj",
+".\Obj\iic.obj",
+".\Obj\key.obj",
+".\Obj\smg.obj",
+".\Obj\public.obj" 
+TO ".\Obj\计时器" 
+PRINT(".\Obj\计时器.m51") RAMSIZE(256) 

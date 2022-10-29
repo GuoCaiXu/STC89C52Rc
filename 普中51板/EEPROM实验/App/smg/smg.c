@@ -1,8 +1,32 @@
 # include "smg.h"
 
+//共阴数码管数字0~9k
+uchar code LedChar[] = { 0x3f,0x06,0x5b,0x4f,0x66,0x6d,0x7d,0x07,0x7f,0x6f };
+
+//数码管缓冲区
+uchar LedBuff[] = {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
+
+//计算数码管显示的有效位
+void smg_Calculate(uchar num){
+    signed char i;
+    uchar arr[8];
+    for (i = 0; i < 8; i++){
+        arr[i] = num % 10;
+        num /= 10;
+    }
+    for (i = 7; i >= 1; i--){
+        if (arr[i] == 0) LedBuff[i] = 0x00;
+        else break;
+    }
+    for (; i >= 0; i--){
+        LedBuff[i] = LedChar[arr[i]];
+    }
+}
+
 //显示数码管函数
 void ShowLed(){
     static uchar i;
+    P0 = 0x00;
     switch(i){
         case 0: ADDR0 = 0; ADDR1 = 0; ADDR2 = 0; i++; P0 = LedBuff[0]; break;
         case 1: ADDR0 = 1; ADDR1 = 0; ADDR2 = 0; i++; P0 = LedBuff[1]; break;

@@ -3,8 +3,8 @@
 
 # include "public.h"
 
-sbit iic_SDA = P2^0;
-sbit iic_SCL = P2^1;
+sbit iic_SDA = P2^0;  //SDA数据线
+sbit iic_SCL = P2^1;  //SCL时钟线
 
 //iic的起始信号
 void iic_start();
@@ -22,9 +22,9 @@ void iic_nock();
 uchar iic_wait_ack();
 
 //写入数据
-void iic_write_byte();
+void iic_write_byte(ulong dat);
 
 //读数据
-uchar iic_read_byte(uchar ack);
+ulong iic_read_byte(ulong ack);
 
 # endif

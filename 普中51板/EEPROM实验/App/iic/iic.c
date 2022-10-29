@@ -2,8 +2,9 @@
 
 //iic的起始信号
 void iic_start(){
-    iic_SCL = 1;
+
     iic_SDA = 1;
+    iic_SCL = 1;
     delay(1);
     iic_SDA = 0;
     delay(1);
@@ -12,8 +13,9 @@ void iic_start(){
 
 //iic的停止信号
 void iic_stop(){
-    iic_SCL = 1;
+
     iic_SDA = 0;
+    iic_SCL = 1;
     delay(1);
     iic_SDA = 1;
     delay(1);
@@ -27,6 +29,7 @@ void iic_ack(){
     iic_SCL = 1;
     delay(1);
     iic_SCL = 0;
+    delay(1);
 }
 
 //非应答信号
@@ -58,18 +61,18 @@ uchar iic_wait_ack(){
 }
 
 //写入数据
-void iic_write_byte(uchar dat){
+void iic_write_byte(ulong dat){
     uchar i = 0;
 
     iic_SCL = 0;
     for (i = 0; i < 8; i++){
-        if (dat & 0x80 > 0){
+        if ((dat & 0x80) > 0){
             iic_SDA = 1;
         }
         else {
             iic_SDA = 0;
         }
-        dat << 1;
+        dat <<= 1;
         iic_SCL = 1;
         delay(1);
         iic_SCL = 0;
@@ -78,10 +81,10 @@ void iic_write_byte(uchar dat){
 }
 
 //读数据
-uchar iic_read_byte(uchar ack){
+ulong iic_read_byte(ulong ack){
 
     uchar i = 0;
-    uchar receive = 0;
+    ulong receive = 0;
     for (i = 0; i < 8; i++){
         iic_SCL = 0;
         delay(1);
@@ -92,7 +95,7 @@ uchar iic_read_byte(uchar ack){
             receive++; 
         }
     }
-if (!ack) iic_nock();
+if (ack) iic_nock();
 else iic_ack(); 
 
     return receive;

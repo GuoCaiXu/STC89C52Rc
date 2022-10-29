@@ -1,18 +1,18 @@
-# ifndef _key_H
+ # ifndef _key_H
 # define _key_H
 
 # include "public.h"
 
 //独立按键
-sbit Key1 = P3^1;
-sbit Key2 = P3^0;
-sbit Key3 = P3^2;
-sbit Key4 = P3^3;
-
-static uchar KeySta = 1;
-static uchar KeyBac = 1;
+sbit KEY1 = P3^1;
+sbit KEY2 = P3^0;
+sbit KEY3 = P3^2;
+sbit KEY4 = P3^3;
 
 //判断按键是否按下函数
-void JudKey();
+uchar JudKey();
+
+//消抖按键函数
+void ShakeKey();
 
 # endif

@@ -1,23 +1,50 @@
-C51 COMPILER V9.60.0.0   PUBLIC                                                            10/26/2022 18:06:33 PAGE 1   
+C51 COMPILER V9.60.0.0   PUBLIC                                                            10/29/2022 08:33:03 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE PUBLIC
 OBJECT MODULE PLACED IN .\Obj\public.obj
 COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Public\public.c OPTIMIZE(8,SPEED) BROWSE INCDIR(.\Public;.\App\iic;.\App
-                    -\key;.\App\smg) DEBUG OBJECTEXTEND PRINT(.\Obj\public.lst) TABS(2) OBJECT(.\Obj\public.obj)
+                    -\key;.\App\smg;.\App\at24c02) DEBUG OBJECTEXTEND PRINT(.\Obj\public.lst) TABS(2) OBJECT(.\Obj\public.obj)
 
 line level    source
 
    1          # include "public.h"
    2          
    3          //延时函数
-   4          void delay(uchar z){
-   5   1          while(z--);
+   4          void delay(uchar us){
+   5   1          while(us--);
    6   1      }
+   7          
+   8          //定时器0 初始化
+   9          void T0_init(){
+  10   1      
+  11   1          EA = 1; //总中断使能开启
+  12   1          TMOD = 0x01; //定时器T0， 工作模式1
+  13   1      
+  14   1          //1 ms
+  15   1          TH0 = 0xfc;
+  16   1          TL0 = 0x66;
+  17   1      
+  18   1          ET0 = 1;  //定时器T0 中断开启
+  19   1          TR0 = 1;  //定时器T0 开启
+  20   1      }
+  21          
+  22          void InterruptTime0() interrupt 1{
+  23   1      
+  24   1          TH0 = 0xfc;
+  25   1          TL0 = 0x66;
+  26   1      
+  27   1          //消抖按键函数
+  28   1          ShakeKey();
+  29   1      
+  30   1          //显示数码管函数
+  31   1          ShowLed();
+  32   1      
+  33   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =      7    ----
+   CODE SIZE        =     91    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----

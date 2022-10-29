@@ -3,6 +3,7 @@
 ".\Obj\iic.obj",
 ".\Obj\key.obj",
 ".\Obj\smg.obj",
+".\Obj\at24c02.obj",
 ".\Obj\public.obj" 
 TO ".\Obj\EEPROM" 
 PRINT(".\Obj\EEPROM.m51") RAMSIZE(256) 

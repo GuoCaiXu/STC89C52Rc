@@ -324,7 +324,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>.\Public;.\App\iic;.\App\key;.\App\smg</IncludePath>
+              <IncludePath>.\Public;.\App\iic;.\App\key;.\App\smg;.\App\at24c02</IncludePath>
             </VariousControls>
           </C51>
           <Ax51>
@@ -405,6 +405,11 @@
               <FileName>smg.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\App\smg\smg.c</FilePath>
+            </File>
+            <File>
+              <FileName>at24c02.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\App\at24c02\at24c02.c</FilePath>
             </File>
           </Files>
         </Group>

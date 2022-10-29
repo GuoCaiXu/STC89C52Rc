@@ -1,32 +1,63 @@
-C51 COMPILER V9.60.0.0   KEY                                                               10/26/2022 18:06:33 PAGE 1   
+C51 COMPILER V9.60.0.0   KEY                                                               10/29/2022 08:33:03 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE KEY
 OBJECT MODULE PLACED IN .\Obj\key.obj
 COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE App\key\key.c OPTIMIZE(8,SPEED) BROWSE INCDIR(.\Public;.\App\iic;.\App\k
-                    -ey;.\App\smg) DEBUG OBJECTEXTEND PRINT(.\Obj\key.lst) TABS(2) OBJECT(.\Obj\key.obj)
+                    -ey;.\App\smg;.\App\at24c02) DEBUG OBJECTEXTEND PRINT(.\Obj\key.lst) TABS(2) OBJECT(.\Obj\key.obj)
 
 line level    source
 
    1          # include "key.h"
    2          
-   3          //判断按键是否按下函数
-   4          void JudKey(){
-   5   1          
-   6   1          if (KeyBac != KeySta){
-   7   2              if (KeyBac != 0){
-   8   3                  
-   9   3              }
-  10   2          }
-  11   1      }
+   3          //判断按键
+   4          uchar KeySta[] = {1,1,1,1};
+   5          
+   6          //判断按键是否按下函数
+   7          uchar JudKey(){
+   8   1      
+   9   1          static uchar KeyBac[] = {1,1,1,1};
+  10   1          uchar i;
+  11   1          uchar n;
+  12   1          for (i = 0; i < 4; i++){
+  13   2          if (KeyBac[i] != KeySta[i]){
+  14   3              if (KeyBac[i] != 0){
+  15   4                  n = i;
+  16   4              }
+  17   3              KeyBac[i] = KeySta[i];
+  18   3          }
+  19   2          }
+  20   1          return n+1;
+  21   1      }
+  22          
+  23          //消抖按键函数
+  24          void ShakeKey(){
+  25   1      
+  26   1          uchar LedBuf[] = {1,1,1,1};
+  27   1          uchar i;
+  28   1      
+  29   1          LedBuf[0] = KEY1;
+  30   1          LedBuf[1] = KEY2;
+  31   1          LedBuf[2] = KEY3;
+  32   1          LedBuf[3] = KEY4;
+  33   1      
+  34   1          for (i = 0; i < 4; i++){
+  35   2              if (LedBuf[i] == 0){
+  36   3                  KeySta[i] = 0;
+  37   3              }
+  38   2              else if (LedBuf[i] == 1){
+  39   3                  KeySta[i] = 1;
+  40   3              }
+  41   2          }
+  42   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =      1    ----
-   CONSTANT SIZE    =   ----    ----
+   CODE SIZE        =    134    ----
+   CONSTANT SIZE    =      4    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =      2    ----
+   DATA SIZE        =      8       4
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.

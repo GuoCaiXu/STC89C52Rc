@@ -1,0 +1,51 @@
+C51 COMPILER V9.60.0.0   MAIN                                                              10/29/2022 13:53:17 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Obj\main.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE User\main.c OPTIMIZE(8,SPEED) BROWSE INCDIR(.\Public;.\App\at24c02;.\App
+                    -\iic;.\App\key;.\App\smg) DEBUG OBJECTEXTEND PRINT(.\Obj\main.lst) TABS(2) OBJECT(.\Obj\main.obj)
+
+line level    source
+
+   1          # include "at24c02.h"
+   2          # include "public.h"
+   3          
+   4          void main(){
+   5   1          ulong num = 0;
+   6   1          uchar Key_temp = 0;
+   7   1      
+   8   1          T0_init();
+   9   1          Num_init();
+  10   1      
+  11   1          while(1){
+  12   2              num = ReturnNum();
+  13   2              Key_temp = key_JudKey();
+  14   2      
+  15   2              if (Key_temp == 1){
+  16   3                      Key1();
+  17   3              }
+  18   2              else if (Key_temp == 2){
+  19   3                  Num_0();
+  20   3              }
+  21   2              else if (Key_temp == 3){
+  22   3                  Key3();
+  23   3              }
+  24   2              smg_CopLed(num);
+  25   2              Key_temp = 0;
+  26   2          }
+  27   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     79    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       5
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

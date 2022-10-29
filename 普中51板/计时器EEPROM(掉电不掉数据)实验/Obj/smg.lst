@@ -1,0 +1,66 @@
+C51 COMPILER V9.60.0.0   SMG                                                               10/29/2022 13:53:17 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE SMG
+OBJECT MODULE PLACED IN .\Obj\smg.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE App\smg\smg.c OPTIMIZE(8,SPEED) BROWSE INCDIR(.\Public;.\App\at24c02;.\A
+                    -pp\iic;.\App\key;.\App\smg) DEBUG OBJECTEXTEND PRINT(.\Obj\smg.lst) TABS(2) OBJECT(.\Obj\smg.obj)
+
+line level    source
+
+   1          # include "smg.h"
+   2          
+   3          //共阴数码管数字0~9
+   4          uchar code LedChar[] = { 0x3f,0x06,0x5b,0x4f,0x66,0x6d,0x7d,0x07,0x7f,0x6f };
+   5          
+   6          //数码管缓存区
+   7          uchar LedBuff[]  = {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
+   8          
+   9          //显示数码管
+  10          void smg_ShowLed(){
+  11   1          static uchar i = 0;
+  12   1      
+  13   1          //消去重影
+  14   1          P0 = 0x00;
+  15   1          switch(i){
+  16   2              case 0 : ADDR0 = 0; ADDR1 = 0; ADDR2 = 0; i++; P0 = LedBuff[0]; break;
+  17   2              case 1 : ADDR0 = 1; ADDR1 = 0; ADDR2 = 0; i++; P0 = LedBuff[1]; break;
+  18   2              case 2 : ADDR0 = 0; ADDR1 = 1; ADDR2 = 0; i++; P0 = LedBuff[2]; break;
+  19   2              case 3 : ADDR0 = 1; ADDR1 = 1; ADDR2 = 0; i++; P0 = LedBuff[3]; break;
+  20   2              case 4 : ADDR0 = 0; ADDR1 = 0; ADDR2 = 1; i++; P0 = LedBuff[4]; break;
+  21   2              case 5 : ADDR0 = 1; ADDR1 = 0; ADDR2 = 1; i++; P0 = LedBuff[5]; break;
+  22   2              case 6 : ADDR0 = 0; ADDR1 = 1; ADDR2 = 1; i++; P0 = LedBuff[6]; break;
+  23   2              case 7 : ADDR0 = 1; ADDR1 = 1; ADDR2 = 1; i=0; P0 = LedBuff[7]; break;
+  24   2          }
+  25   1      }
+  26          
+  27          //计算数码管的显示内容和显示有效位
+  28          void smg_CopLed(ulong num){
+  29   1          ichar i;
+  30   1          uchar arr[8];
+  31   1          for (i = 0; i < 8; i++){
+  32   2              arr[i] = num % 10;
+  33   2              num /= 10;
+  34   2          }
+  35   1          for (i = 7; i >= 1; i--){
+  36   2              if (arr[i] == 0) LedBuff[i] = 0x00;
+  37   2              else break;
+  38   2          }
+  39   1          for (; i >= 0; i--){
+  40   2              LedBuff[i] = LedChar[arr[i]];
+  41   2          }
+  42   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    298    ----
+   CONSTANT SIZE    =     10    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      9      13
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,64 @@
+C51 COMPILER V9.60.0.0   KEY                                                               10/29/2022 13:53:17 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE KEY
+OBJECT MODULE PLACED IN .\Obj\key.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE App\key\key.c OPTIMIZE(8,SPEED) BROWSE INCDIR(.\Public;.\App\at24c02;.\A
+                    -pp\iic;.\App\key;.\App\smg) DEBUG OBJECTEXTEND PRINT(.\Obj\key.lst) TABS(2) OBJECT(.\Obj\key.obj)
+
+line level    source
+
+   1          # include "key.h"
+   2          
+   3          uchar KeySta[] = {1,1,1,1};
+   4          
+   5          //判断按键是否按下
+   6          uchar key_JudKey(){
+   7   1          uchar KeyBac[] = {1,1,1,1};
+   8   1          uchar i;
+   9   1          uchar n;
+  10   1          for (i = 0; i < 4; i++){
+  11   2              if (KeyBac[i] != KeySta[i]){
+  12   3                  if (KeyBac[i] != 0){
+  13   4                      n = i+1;
+  14   4                  }
+  15   3                  KeyBac[i] = KeySta[i];
+  16   3              }
+  17   2          }
+  18   1          return n;
+  19   1      }
+  20          
+  21          //按键消抖
+  22          void key_Vanish(){
+  23   1      
+  24   1          uchar KeyBuf[] = {1,1,1,1};
+  25   1          uchar i;
+  26   1          
+  27   1          KeyBuf[0] = KEY1;
+  28   1          KeyBuf[1] = KEY2;
+  29   1          KeyBuf[2] = KEY3;
+  30   1          KeyBuf[3] = KEY4;
+  31   1      
+  32   1          for (i = 0; i < 4; i++){
+  33   2              if (KeyBuf[i] == 0){
+  34   3                  KeySta[i] = 0;
+  35   3              }
+  36   2              else if (KeyBuf[i] == 1){
+  37   3                  KeySta[i] = 1;
+  38   3              }
+  39   2          }
+  40   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    154    ----
+   CONSTANT SIZE    =      8    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      4       9
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
