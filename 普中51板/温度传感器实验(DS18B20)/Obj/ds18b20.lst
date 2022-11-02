@@ -1,0 +1,70 @@
+C51 COMPILER V9.60.0.0   DS18B20                                                           11/02/2022 13:30:54 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE DS18B20
+OBJECT MODULE PLACED IN .\Obj\ds18b20.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE App\DS10B20\ds18b20.c OPTIMIZE(8,SPEED) BROWSE INCDIR(.\App\smg;.\Public
+                    -;.\App\DS10B20) DEBUG OBJECTEXTEND PRINT(.\Obj\ds18b20.lst) TABS(2) OBJECT(.\Obj\ds18b20.obj)
+
+line level    source
+
+   1          # include "ds18b20.h"
+   2          
+   3          //复位
+   4          void ds18b20_reset(){
+   5   1          DS18B20_IO = 0;
+   6   1          public_us_delay(75);
+   7   1          DS18B20_IO = 1;
+   8   1          public_us_delay(2);
+   9   1      }
+  10          
+  11          //检测DS18B20 是否存在
+  12          uchar ds18b20_check(){
+  13   1      
+  14   1          uchar time_temp = 0;
+  15   1          while(DS18B20_IO && time_temp < 20){
+  16   2              time_temp ++;
+  17   2              public_us_delay(1);
+  18   2          }
+  19   1          if (time_temp >= 20) return 1;
+  20   1          else time_temp = 0;
+  21   1          //0 检测到ds18b20 响应， 1 为响应超时和非响应
+  22   1      
+  23   1          while(!DS18B20_IO && time_temp < 20){
+  24   2              time_temp ++;
+  25   2              public_us_delay(1);
+  26   2          }
+  27   1          if (time_temp >= 20) return 1;
+  28   1          return 0;
+  29   1      }
+  30          
+  31          //初始化时序
+  32          uchar ds18b20_init(){
+  33   1          ds18b20_reset();
+  34   1          return ds18b20_check();
+  35   1      }
+  36          
+  37          //写函数
+  38          void de18b20_write_byte(uchar dat){
+  39   1          uchar i;
+  40   1          uchar temp = 0;
+  41   1          for (i = 0; i < 8; i++){
+  42   2              temp = dat & 0x01;
+  43   2          }
+  44   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    123    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       1
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+C51 COMPILER V9.60.0.0   DS18B20                                                           11/02/2022 13:30:54 PAGE 2   
+
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

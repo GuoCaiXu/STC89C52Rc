@@ -1,0 +1,6 @@
+".\Obj\main.obj",
+".\Obj\smg.obj",
+".\Obj\ds18b20.obj",
+".\Obj\public.obj" 
+TO ".\Obj\DS18B20" 
+PRINT(".\Obj\DS18B20.m51") RAMSIZE(256) 
