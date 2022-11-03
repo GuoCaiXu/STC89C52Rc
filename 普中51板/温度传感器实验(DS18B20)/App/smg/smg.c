@@ -22,3 +22,24 @@ void smg_ShowLed(){
         case 7 : ADDR0 = 1; ADDR1 = 1; ADDR2 = 1; i=0; P0 = LedBuff[7]; break;
     }
 }
+
+//数码管显示有效位
+void smg_ShowNumber(int num, uchar pick){
+    signed i;
+    uchar arr[8];
+    for (i = 0; i < 8; i++){
+        arr[i] = num % 10;
+        num /= 10;
+    }
+    for (i = 7; i >=1; i--){
+        if (arr[i] != 0){ 
+            if (pick == 0) LedBuff[i+1] = 0x40;
+            break;
+        }
+        else LedBuff[i] = 0x00;
+    }
+    for (; i >= 0; i--){
+        LedBuff[i] = LedChar[arr[i]];
+    }
+    LedBuff[1] = LedBuff[1] | 0x80;
+}

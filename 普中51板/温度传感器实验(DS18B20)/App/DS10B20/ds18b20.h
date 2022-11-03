@@ -24,8 +24,11 @@ uchar ds18b20_read_bit();
 //读字节数据
 uchar ds18b20_read_byte();
 
+//温度转化函数
+void ds18b20_start();
+
 //返回温度
-float ds18b20_
+float ds18b20_read_temperture();
 
 
 # endif

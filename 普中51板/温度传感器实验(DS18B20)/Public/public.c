@@ -20,3 +20,18 @@ void public_T0_init(){
 void public_us_delay(uchar z){
     while(z--);
 }
+
+//延时函数 ms
+void public_ms_delay(uchar z){
+	uchar i;
+    while(z--){
+        for(i = 0; i < 120; i++);
+    }
+}
+
+void InterruptTime0() interrupt 1{
+    TH0 = 0xfc;
+    TL0 = 0x66;
+
+    smg_ShowLed();
+}

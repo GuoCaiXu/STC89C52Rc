@@ -11,4 +11,7 @@ sbit ADDR2 = P2^4;
 //显示数码管
 void smg_ShowLed();
 
+//数码管显示有效位
+void smg_ShowNumber(int num, uchar pick);
+
 # endif
