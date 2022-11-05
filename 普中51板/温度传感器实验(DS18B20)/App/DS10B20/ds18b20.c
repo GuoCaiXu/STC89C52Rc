@@ -28,37 +28,6 @@ uchar ds18b20_check(){
     return 0;
 }
 
-//初始化时序
-uchar ds18b20_init(){
-    ds18b20_reset();
-    return ds18b20_check();
-}
-
-//写函数
-void ds18b20_write_byte(uchar dat){
-    uchar i;
-    uchar temp = 0;
-    for (i = 0; i < 8; i++){
-        temp = dat & 0x01;
-        dat >>= 1;
-        if (temp) {
-            DS18B20_IO = 0;
-            //一个_nop_() 函数代表一个um (微秒)
-            _nop_();
-            _nop_();
-            DS18B20_IO = 1;
-            public_ms_delay(6);
-        }
-        else {
-            DS18B20_IO = 0;
-            public_us_delay(6);
-            DS18B20_IO = 1;
-            _nop_();
-            _nop_();
-        }
-    }
-}
-
 //读位函数
 uchar ds18b20_read_bit(){
 
@@ -84,6 +53,32 @@ uchar ds18b20_read_byte(){
     return dat;
 }
 
+//写函数
+void ds18b20_write_byte(uchar dat){
+    uchar i;
+    uchar temp = 0;
+    for (i = 0; i < 8; i++){
+        temp = dat & 0x01;
+        dat >>= 1;
+        if (temp) {
+            DS18B20_IO = 0;
+            //一个_nop_() 函数代表一个um (微秒)
+            _nop_();
+            _nop_();
+            DS18B20_IO = 1;
+            public_us_delay(6);
+        }
+        else {
+            DS18B20_IO = 0;
+            public_us_delay(6);
+            DS18B20_IO = 1;
+            _nop_();
+            _nop_();
+        }
+    }
+}
+
+
 //温度转化函数
 void ds18b20_start(){
 
@@ -93,12 +88,19 @@ void ds18b20_start(){
     ds18b20_write_byte(0x44);
 }
 
+//初始化时序
+uchar ds18b20_init(){
+    ds18b20_reset();
+    return ds18b20_check();
+}
+
 //返回温度
 float ds18b20_read_temperture(){
+
+    float temp;
     uchar dath = 0;
     uchar datl = 0;
     uint value = 0;
-    float temp;
 
     ds18b20_start();
     ds18b20_reset();
@@ -111,7 +113,7 @@ float ds18b20_read_temperture(){
     value = (dath << 8) + datl;
 
     //判断温度是-还是+
-    if (value&0xf800 == 0xf800){
+    if ((value & 0xf800) == 0xf800){
 
         value = (~value) + 1;
         temp = value * (-0.0625);

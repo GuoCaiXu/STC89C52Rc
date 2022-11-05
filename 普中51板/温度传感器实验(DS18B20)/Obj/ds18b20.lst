@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   DS18B20                                                           11/03/2022 16:33:30 PAGE 1   
+C51 COMPILER V9.60.0.0   DS18B20                                                           11/04/2022 17:08:15 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE DS18B20
@@ -38,108 +38,110 @@ line level    source
   28   1          return 0;
   29   1      }
   30          
-  31          //初始化时序
-  32          uchar ds18b20_init(){
-  33   1          ds18b20_reset();
-  34   1          return ds18b20_check();
-  35   1      }
-  36          
-  37          //写函数
-  38          void ds18b20_write_byte(uchar dat){
-  39   1          uchar i;
-  40   1          uchar temp = 0;
-  41   1          for (i = 0; i < 8; i++){
-  42   2              temp = dat & 0x01;
-  43   2              dat >>= 1;
-  44   2              if (temp) {
-  45   3                  DS18B20_IO = 0;
-  46   3                  //一个_nop_() 函数代表一个um (微秒)
-  47   3                  _nop_();
-  48   3                  _nop_();
-  49   3                  DS18B20_IO = 1;
-  50   3                  public_ms_delay(6);
-  51   3              }
-  52   2              else {
-  53   3                  DS18B20_IO = 0;
-  54   3                  public_us_delay(6);
-C51 COMPILER V9.60.0.0   DS18B20                                                           11/03/2022 16:33:30 PAGE 2   
+  31          //读位函数
+  32          uchar ds18b20_read_bit(){
+  33   1      
+  34   1          uchar dat = 0;
+  35   1          DS18B20_IO = 0;
+  36   1          _nop_(); _nop_();  //2 us
+  37   1          DS18B20_IO = 1;
+  38   1          if (DS18B20_IO) dat = 1;
+  39   1          else dat = 0;
+  40   1          public_us_delay(5);
+  41   1          return dat;
+  42   1      }
+  43          
+  44          //读字节数据
+  45          uchar ds18b20_read_byte(){
+  46   1          uchar i;
+  47   1          uchar temp = 0;
+  48   1          uchar dat  = 0;
+  49   1          for (i = 0; i < 8; i++){
+  50   2              temp = ds18b20_read_bit();
+  51   2              dat = (temp << 7) | (dat >> 1);
+  52   2          }
+  53   1          return dat;
+  54   1      }
+C51 COMPILER V9.60.0.0   DS18B20                                                           11/04/2022 17:08:15 PAGE 2   
 
-  55   3                  DS18B20_IO = 1;
-  56   3                  _nop_();
-  57   3                  _nop_();
-  58   3              }
-  59   2          }
-  60   1      }
-  61          
-  62          //读位函数
-  63          uchar ds18b20_read_bit(){
-  64   1      
-  65   1          uchar dat = 0;
-  66   1          DS18B20_IO = 0;
-  67   1          _nop_(); _nop_();  //2 us
-  68   1          DS18B20_IO = 1;
-  69   1          if (DS18B20_IO) dat = 1;
-  70   1          else dat = 0;
-  71   1          public_us_delay(5);
-  72   1          return dat;
-  73   1      }
-  74          
-  75          //读字节数据
-  76          uchar ds18b20_read_byte(){
-  77   1          uchar i;
-  78   1          uchar temp = 0;
-  79   1          uchar dat  = 0;
-  80   1          for (i = 0; i < 8; i++){
-  81   2              temp = ds18b20_read_bit();
-  82   2              dat = (temp << 7) | (dat >> 1);
-  83   2          }
-  84   1          return dat;
-  85   1      }
-  86          
-  87          //温度转化函数
-  88          void ds18b20_start(){
-  89   1      
-  90   1          ds18b20_reset();
-  91   1          ds18b20_check();
-  92   1          ds18b20_write_byte(0xcc);
-  93   1          ds18b20_write_byte(0x44);
-  94   1      }
-  95          
-  96          //返回温度
-  97          float ds18b20_read_temperture(){
-  98   1          uchar dath = 0;
-  99   1          uchar datl = 0;
- 100   1          uint value = 0;
- 101   1          float temp;
- 102   1      
- 103   1          ds18b20_start();
- 104   1          ds18b20_reset();
- 105   1          ds18b20_check();
- 106   1          ds18b20_write_byte(0xcc);
- 107   1          ds18b20_write_byte(0xbe);
- 108   1      
- 109   1          datl = ds18b20_read_byte();
- 110   1          dath = ds18b20_read_byte();
- 111   1          value = (dath << 8) + datl;
- 112   1      
- 113   1          //判断温度是-还是+
- 114   1          if (value&0xf800 == 0xf800){
- 115   2      
- 116   2              value = (~value) + 1;
-C51 COMPILER V9.60.0.0   DS18B20                                                           11/03/2022 16:33:30 PAGE 3   
+  55          
+  56          //写函数
+  57          void ds18b20_write_byte(uchar dat){
+  58   1          uchar i;
+  59   1          uchar temp = 0;
+  60   1          for (i = 0; i < 8; i++){
+  61   2              temp = dat & 0x01;
+  62   2              dat >>= 1;
+  63   2              if (temp) {
+  64   3                  DS18B20_IO = 0;
+  65   3                  //一个_nop_() 函数代表一个um (微秒)
+  66   3                  _nop_();
+  67   3                  _nop_();
+  68   3                  DS18B20_IO = 1;
+  69   3                  public_us_delay(6);
+  70   3              }
+  71   2              else {
+  72   3                  DS18B20_IO = 0;
+  73   3                  public_us_delay(6);
+  74   3                  DS18B20_IO = 1;
+  75   3                  _nop_();
+  76   3                  _nop_();
+  77   3              }
+  78   2          }
+  79   1      }
+  80          
+  81          
+  82          //温度转化函数
+  83          void ds18b20_start(){
+  84   1      
+  85   1          ds18b20_reset();
+  86   1          ds18b20_check();
+  87   1          ds18b20_write_byte(0xcc);
+  88   1          ds18b20_write_byte(0x44);
+  89   1      }
+  90          
+  91          //初始化时序
+  92          uchar ds18b20_init(){
+  93   1          ds18b20_reset();
+  94   1          return ds18b20_check();
+  95   1      }
+  96          
+  97          //返回温度
+  98          float ds18b20_read_temperture(){
+  99   1      
+ 100   1          float temp;
+ 101   1          uchar dath = 0;
+ 102   1          uchar datl = 0;
+ 103   1          uint value = 0;
+ 104   1      
+ 105   1          ds18b20_start();
+ 106   1          ds18b20_reset();
+ 107   1          ds18b20_check();
+ 108   1          ds18b20_write_byte(0xcc);
+ 109   1          ds18b20_write_byte(0xbe);
+ 110   1      
+ 111   1          datl = ds18b20_read_byte();
+ 112   1          dath = ds18b20_read_byte();
+ 113   1          value = (dath << 8) + datl;
+ 114   1      
+ 115   1          //判断温度是-还是+
+ 116   1          if ((value & 0xf800) == 0xf800){
+C51 COMPILER V9.60.0.0   DS18B20                                                           11/04/2022 17:08:15 PAGE 3   
 
- 117   2              temp = value * (-0.0625);
- 118   2          }
- 119   1          else {
- 120   2              temp = value * 0.0625;
- 121   2          }
- 122   1      
- 123   1          return temp;
- 124   1      }
+ 117   2      
+ 118   2              value = (~value) + 1;
+ 119   2              temp = value * (-0.0625);
+ 120   2          }
+ 121   1          else {
+ 122   2              temp = value * 0.0625;
+ 123   2          }
+ 124   1      
+ 125   1          return temp;
+ 126   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    371    ----
+   CODE SIZE        =    375    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----

@@ -16,7 +16,7 @@ void smg_ShowLed(){
         case 1 : ADDR0 = 1; ADDR1 = 0; ADDR2 = 0; i++; P0 = LedBuff[1]; break;
         case 2 : ADDR0 = 0; ADDR1 = 1; ADDR2 = 0; i++; P0 = LedBuff[2]; break;
         case 3 : ADDR0 = 1; ADDR1 = 1; ADDR2 = 0; i++; P0 = LedBuff[3]; break;
-        case 4 : ADDR0 = 0; ADDR1 = 0; ADDR2 = 1; i++; P0 = LedBuff[4]; break;
+        case 4 : ADDR0 = 0; ADDR1 = 0; ADDR2 = 1; i=0; P0 = LedBuff[4]; break;
         case 5 : ADDR0 = 1; ADDR1 = 0; ADDR2 = 1; i++; P0 = LedBuff[5]; break;
         case 6 : ADDR0 = 0; ADDR1 = 1; ADDR2 = 1; i++; P0 = LedBuff[6]; break;
         case 7 : ADDR0 = 1; ADDR1 = 1; ADDR2 = 1; i=0; P0 = LedBuff[7]; break;
@@ -24,14 +24,14 @@ void smg_ShowLed(){
 }
 
 //数码管显示有效位
-void smg_ShowNumber(int num, uchar pick){
+void smg_ShowNumber(uint num, uchar pick){
     signed i;
-    uchar arr[8];
-    for (i = 0; i < 8; i++){
+    uchar arr[5];
+    for (i = 0; i < 5; i++){
         arr[i] = num % 10;
         num /= 10;
     }
-    for (i = 7; i >=1; i--){
+    for (i = 4; i >=2; i--){
         if (arr[i] != 0){ 
             if (pick == 0) LedBuff[i+1] = 0x40;
             break;

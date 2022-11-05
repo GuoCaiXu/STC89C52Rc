@@ -21,14 +21,7 @@ void public_us_delay(uchar z){
     while(z--);
 }
 
-//延时函数 ms
-void public_ms_delay(uchar z){
-	uchar i;
-    while(z--){
-        for(i = 0; i < 120; i++);
-    }
-}
-
+//中断函数
 void InterruptTime0() interrupt 1{
     TH0 = 0xfc;
     TL0 = 0x66;
