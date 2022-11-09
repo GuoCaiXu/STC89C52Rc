@@ -1,0 +1,105 @@
+C51 COMPILER V9.60.0.0   HS0038                                                            11/09/2022 14:51:48 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE HS0038
+OBJECT MODULE PLACED IN .\Obj\hs0038.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE App\hs0038\hs0038.c OPTIMIZE(8,SPEED) BROWSE INCDIR(.\Public;.\App\hs003
+                    -8;.\App\smg) DEBUG OBJECTEXTEND PRINT(.\Obj\hs0038.lst) TABS(2) OBJECT(.\Obj\hs0038.obj)
+
+line level    source
+
+   1          # include "hs0038.h"
+   2          
+   3          u8 gired[4];
+   4          
+   5          //红外遥控初始化
+   6          void hs0038_ired_init(){
+   7   1      
+   8   1          //外部中断0 中断开启
+   9   1          IT0 = 1;
+  10   1      
+  11   1          //开启外部中断0
+  12   1          EX0 = 1;
+  13   1      
+  14   1          //IRED 拉高电平 初始化端口
+  15   1          IRED = 1;
+  16   1      }
+  17          
+  18          //ired初始化函数
+  19          void ired() interrupt 0{
+  20   1          u16 time_cnt = 0;
+  21   1          u8 i = 0, j = 0;
+  22   1          u8 ired_high_time = 0;
+  23   1      
+  24   1          if (IRED == 0){
+  25   2              //10ms 限制条件
+  26   2              time_cnt = 1000;
+  27   2      
+  28   2              while((!IRED) && (time_cnt)){
+  29   3                  //延时10 us
+  30   3                  delay_us(1);
+  31   3                  time_cnt --;
+  32   3                  if (time_cnt == 0) return;
+  33   3                  //cnt 减一次延迟10us 当cnt = 0 时， 也就是10ms 超过9ms 低电平 认为是一个�
+             -��误信号
+  34   3              }
+  35   2      
+  36   2              //判断 ired 拉高电平4.5ms
+  37   2              if (IRED){
+  38   3                  time_cnt = 500;
+  39   3                  while(IRED && time_cnt){
+  40   4                      delay_us(1);
+  41   4                      time_cnt --;
+  42   4                      if (time_cnt == 0) return;
+  43   4                  }
+  44   3      
+  45   3                  //开始读取数据
+  46   3                  for (i = 0; i < 4; i++){
+  47   4                      for (j = 0; j < 8; j++){
+  48   5      
+  49   5                          //先拉低0.56ms 低电平
+  50   5                          time_cnt =60;
+  51   5                          while((!IRED) && time_cnt){
+  52   6      
+  53   6                              //减一次耗时10 us
+C51 COMPILER V9.60.0.0   HS0038                                                            11/09/2022 14:51:48 PAGE 2   
+
+  54   6                              delay_us(1);
+  55   6                              time_cnt--;
+  56   6                              if (time_cnt == 0) return;
+  57   6                          }
+  58   5      
+  59   5                          time_cnt = 20;
+  60   5                          while(IRED){
+  61   6                              //一次延迟100 us
+  62   6                              delay_us(10);
+  63   6                              ired_high_time++;
+  64   6                              if (ired_high_time >= 20) return;
+  65   6                          }
+  66   5                          gired[i] >>= 1;
+  67   5                          if (ired_high_time >= 8)
+  68   5                          gired[i] |= 0x80;
+  69   5                      }
+  70   4                  }
+  71   3              }
+  72   2              if (gired[2] != ~gired[3]){
+  73   3                  for (i = 0; i < 4; i++)
+  74   3                  gired[i] = 0;
+  75   3                  return;
+  76   3              }
+  77   2          }
+  78   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    331    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      4       5
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

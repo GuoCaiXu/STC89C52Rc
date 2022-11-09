@@ -11,6 +11,16 @@ sbit SCLK = P3^6;
 void ds1302_write_byte();
 
 //读字节函数
-void ds1302_read_byte();
+u8 ds1302_read_byte();
+
+//ds1302 初始化
+void ds1302_init();
+
+//读时间
+void ds1302_read_time();
+
+//返回时间
+u8 ds1302_turn();
+
 
 # endif

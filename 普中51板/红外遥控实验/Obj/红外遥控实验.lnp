@@ -1,0 +1,7 @@
+".\Obj\STARTUP.obj",
+".\Obj\main.obj",
+".\Obj\hs0038.obj",
+".\Obj\smg.obj",
+".\Obj\public.obj" 
+TO ".\Obj\红外遥控实验" 
+PRINT(".\Obj\红外遥控实验.m51") RAMSIZE(256) 

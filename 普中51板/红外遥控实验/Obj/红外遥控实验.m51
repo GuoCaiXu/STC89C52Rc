@@ -1,0 +1,325 @@
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    11/09/2022  14:51:48  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22.2.0, INVOKED BY:
+C:\KEIL_V5\C51\BIN\BL51.EXE .\Obj\STARTUP.obj, .\Obj\main.obj, .\Obj\hs0038.obj, .\Obj\smg.obj, .\Obj\public.obj TO .\Ob
+>> j\红外遥控实验 PRINT (.\Obj\红外遥控实验.m51) RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Obj\STARTUP.obj (?C_STARTUP)
+  .\Obj\main.obj (MAIN)
+  .\Obj\hs0038.obj (HS0038)
+  .\Obj\smg.obj (SMG)
+  .\Obj\public.obj (PUBLIC)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  .\Obj\红外遥控实验 (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0009H     UNIT         ?DT?SMG
+            DATA    0011H     0005H     UNIT         _DATA_GROUP_
+            DATA    0016H     0004H     UNIT         ?DT?HS0038
+            IDATA   001AH     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0003H     ABSOLUTE     
+                    0006H     0005H                  *** GAP ***
+            CODE    000BH     0003H     ABSOLUTE     
+                    000EH     07F2H                  *** GAP ***
+            CODE    0800H     0144H     UNIT         ?PR?IRED?HS0038
+            CODE    0944H     008DH     UNIT         ?PR?SMG_SHOWLED?SMG
+            CODE    09D1H     008CH     UNIT         ?C_C51STARTUP
+            CODE    0A5DH     0041H     UNIT         ?PR?INTERRUPTTIME0?PUBLIC
+            CODE    0A9EH     001AH     UNIT         ?PR?MAIN?MAIN
+            CODE    0AB8H     0010H     UNIT         ?PR?T0_INIT?PUBLIC
+            CODE    0AC8H     000EH     UNIT         ?C_INITSEG
+            CODE    0AD6H     000AH     UNIT         ?CO?SMG
+            CODE    0AE0H     0007H     UNIT         ?PR?HS0038_IRED_INIT?HS0038
+            CODE    0AE7H     0007H     UNIT         ?PR?_DELAY_US?PUBLIC
+
+
+
+OVERLAY MAP OF MODULE:   .\Obj\红外遥控实验 (?C_STARTUP)
+
+
+SEGMENT                               DATA_GROUP 
+  +--> CALLED SEGMENT               START    LENGTH
+---------------------------------------------------
+?C_C51STARTUP                       -----    -----
+  +--> ?PR?MAIN?MAIN
+
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/09/2022  14:51:48  PAGE 2
+
+
+?PR?MAIN?MAIN                       -----    -----
+  +--> ?PR?T0_INIT?PUBLIC
+  +--> ?PR?HS0038_IRED_INIT?HS0038
+  +--> ?CO?SMG
+
+*** NEW ROOT ***************************************************
+
+?PR?IRED?HS0038                     0011H    0005H
+  +--> ?PR?_DELAY_US?PUBLIC
+
+*** NEW ROOT ***************************************************
+
+?PR?INTERRUPTTIME0?PUBLIC           -----    -----
+  +--> ?PR?SMG_SHOWLED?SMG
+
+
+
+SYMBOL TABLE OF MODULE:  .\Obj\红外遥控实验 (?C_STARTUP)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ?C_STARTUP
+  C:09D1H         SEGMENT       ?C_C51STARTUP
+  I:001AH         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:00E0H         SYMBOL        ACC
+  D:00F0H         SYMBOL        B
+  D:0083H         SYMBOL        DPH
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:09D4H         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0100H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:09D1H         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         126
+  C:09D1H         LINE#         133
+  C:09D3H         LINE#         134
+  C:09D4H         LINE#         135
+  C:09D5H         LINE#         136
+  C:09D7H         LINE#         185
+  C:09DAH         LINE#         196
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        MAIN
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/09/2022  14:51:48  PAGE 3
+
+
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  D:00A8H         PUBLIC        IE
+  D:00B8H         PUBLIC        IP
+  C:0A9EH         PUBLIC        main
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  D:00C8H         PUBLIC        T2CON
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          MAIN
+  C:0A9EH         LINE#         3
+  C:0A9EH         LINE#         5
+  C:0AA1H         LINE#         6
+  C:0AA4H         LINE#         8
+  C:0AA4H         LINE#         10
+  C:0AAEH         LINE#         11
+  C:0AB6H         LINE#         12
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        MAIN
+
+  -------         MODULE        HS0038
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  D:0016H         PUBLIC        gired
+  D:00A8H         PUBLIC        IE
+  D:00B8H         PUBLIC        IP
+  B:00B0H.2       PUBLIC        IRED
+  C:0800H         PUBLIC        ired
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  C:0AE0H         PUBLIC        hs0038_ired_init
+  B:00A8H.0       PUBLIC        EX0
+  B:0088H.0       PUBLIC        IT0
+  D:00C8H         PUBLIC        T2CON
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          HS0038_IRED_INIT
+  C:0AE0H         LINE#         6
+  C:0AE0H         LINE#         9
+  C:0AE2H         LINE#         12
+  C:0AE4H         LINE#         15
+  C:0AE6H         LINE#         16
+  -------         ENDPROC       HS0038_IRED_INIT
+  -------         PROC          IRED
+  -------         DO            
+  D:0011H         SYMBOL        time_cnt
+  D:0013H         SYMBOL        i
+  D:0014H         SYMBOL        j
+  D:0015H         SYMBOL        ired_high_time
+  -------         ENDDO         
+  C:0800H         LINE#         19
+  C:081DH         LINE#         20
+  C:0823H         LINE#         21
+  C:0829H         LINE#         22
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/09/2022  14:51:48  PAGE 4
+
+
+  C:082CH         LINE#         24
+  C:0832H         LINE#         26
+  C:0838H         LINE#         28
+  C:0841H         LINE#         30
+  C:0846H         LINE#         31
+  C:084EH         LINE#         32
+  C:0857H         LINE#         34
+  C:0857H         LINE#         37
+  C:085DH         LINE#         38
+  C:0863H         LINE#         39
+  C:086CH         LINE#         40
+  C:0871H         LINE#         41
+  C:0879H         LINE#         42
+  C:0882H         LINE#         43
+  C:0882H         LINE#         46
+  C:0890H         LINE#         47
+  C:089EH         LINE#         50
+  C:08A4H         LINE#         51
+  C:08ADH         LINE#         54
+  C:08B2H         LINE#         55
+  C:08BAH         LINE#         56
+  C:08C2H         LINE#         57
+  C:08C2H         LINE#         59
+  C:08C8H         LINE#         60
+  C:08CBH         LINE#         62
+  C:08D0H         LINE#         63
+  C:08D2H         LINE#         64
+  C:08DFH         LINE#         65
+  C:08DFH         LINE#         66
+  C:08ECH         LINE#         67
+  C:08F7H         LINE#         68
+  C:0900H         LINE#         69
+  C:0904H         LINE#         70
+  C:0909H         LINE#         71
+  C:0909H         LINE#         72
+  C:0910H         LINE#         73
+  C:091EH         LINE#         74
+  C:0929H         LINE#         76
+  C:0929H         LINE#         77
+  C:0929H         LINE#         78
+  -------         ENDPROC       IRED
+  -------         ENDMOD        HS0038
+
+  -------         MODULE        SMG
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  D:00A8H         PUBLIC        IE
+  C:0AD6H         PUBLIC        LedChar
+  D:00B8H         PUBLIC        IP
+  D:0009H         PUBLIC        LedBuff
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  B:00A0H.2       PUBLIC        ADDR0
+  B:00A0H.3       PUBLIC        ADDR1
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/09/2022  14:51:48  PAGE 5
+
+
+  B:00A0H.4       PUBLIC        ADDR2
+  C:0944H         PUBLIC        smg_ShowLed
+  D:00C8H         PUBLIC        T2CON
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          SMG_SHOWLED
+  -------         DO            
+  D:0008H         SYMBOL        i
+  -------         ENDDO         
+  C:0944H         LINE#         10
+  C:0944H         LINE#         14
+  C:0947H         LINE#         15
+  C:0970H         LINE#         16
+  C:097CH         LINE#         17
+  C:0988H         LINE#         18
+  C:0994H         LINE#         19
+  C:09A0H         LINE#         20
+  C:09ACH         LINE#         21
+  C:09B8H         LINE#         22
+  C:09C4H         LINE#         23
+  C:09D0H         LINE#         24
+  C:09D0H         LINE#         25
+  -------         ENDPROC       SMG_SHOWLED
+  -------         ENDMOD        SMG
+
+  -------         MODULE        PUBLIC
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  B:00A8H.7       PUBLIC        EA
+  D:00A8H         PUBLIC        IE
+  C:0A5DH         PUBLIC        InterruptTime0
+  D:00B8H         PUBLIC        IP
+  C:0AB8H         PUBLIC        T0_init
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  B:00A8H.1       PUBLIC        ET0
+  D:008CH         PUBLIC        TH0
+  D:008AH         PUBLIC        TL0
+  B:0088H.4       PUBLIC        TR0
+  C:0AE7H         PUBLIC        _delay_us
+  D:00C8H         PUBLIC        T2CON
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          T0_INIT
+  C:0AB8H         LINE#         4
+  C:0AB8H         LINE#         6
+  C:0ABAH         LINE#         9
+  C:0ABDH         LINE#         12
+  C:0AC0H         LINE#         13
+  C:0AC3H         LINE#         16
+  C:0AC5H         LINE#         19
+  C:0AC7H         LINE#         20
+  -------         ENDPROC       T0_INIT
+  -------         PROC          _DELAY_US
+  D:0007H         SYMBOL        z
+  C:0AE7H         LINE#         23
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/09/2022  14:51:48  PAGE 6
+
+
+  C:0AE7H         LINE#         24
+  C:0AEDH         LINE#         25
+  -------         ENDPROC       _DELAY_US
+  -------         PROC          INTERRUPTTIME0
+  C:0A5DH         LINE#         28
+  C:0A7AH         LINE#         30
+  C:0A7DH         LINE#         31
+  C:0A80H         LINE#         33
+  C:0A83H         LINE#         34
+  -------         ENDPROC       INTERRUPTTIME0
+  -------         ENDMOD        PUBLIC
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?C_INITSEG
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0276H BYTE (30%) *
+******************************************************************************
+
+Program Size: data=27.0 xdata=0 code=759
+LINK/LOCATE RUN COMPLETE.  1 WARNING(S),  0 ERROR(S)

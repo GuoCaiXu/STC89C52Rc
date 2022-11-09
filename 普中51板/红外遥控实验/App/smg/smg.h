@@ -2,23 +2,16 @@
 # define _smg_H
 
 # include "public.h"
-# include "ds1302.h"
 
-//38 译码器
+//30 译码器
 sbit ADDR0 = P2^2;
 sbit ADDR1 = P2^3;
 sbit ADDR2 = P2^4;
 
+extern u8 code LedChar[];
+extern u8 LedBuff[];
+
 //显示数码管
 void smg_ShowLed();
-
-//返回时间初始化数字
-void smg_turn();
-
-//运行时间
-void smg_run();
-
-//显示时间数字
-void smg_ShowNum();
 
 # endif

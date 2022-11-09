@@ -46,7 +46,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\Obj\</OutputDirectory>
-          <OutputName>DS1302</OutputName>
+          <OutputName>红外遥控实验</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
@@ -324,7 +324,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>.\Public;.\App\ds1302;.\App\smg</IncludePath>
+              <IncludePath>.\Public;.\App\hs0038;.\App\smg</IncludePath>
             </VariousControls>
           </C51>
           <Ax51>
@@ -392,14 +392,14 @@
           <GroupName>App</GroupName>
           <Files>
             <File>
+              <FileName>hs0038.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\App\hs0038\hs0038.c</FilePath>
+            </File>
+            <File>
               <FileName>smg.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\App\smg\smg.c</FilePath>
-            </File>
-            <File>
-              <FileName>ds1302.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\App\ds1302\ds1302.c</FilePath>
             </File>
           </Files>
         </Group>
