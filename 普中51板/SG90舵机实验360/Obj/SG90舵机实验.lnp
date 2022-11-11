@@ -1,0 +1,7 @@
+".\Obj\STARTUP.obj",
+".\Obj\main.obj",
+".\Obj\sg90.obj",
+".\Obj\key.obj",
+".\Obj\public.obj" 
+TO ".\Obj\SG90舵机实验" 
+PRINT(".\Obj\SG90舵机实验.m51") RAMSIZE(256) 

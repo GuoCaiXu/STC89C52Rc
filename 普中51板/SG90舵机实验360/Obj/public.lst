@@ -1,0 +1,59 @@
+C51 COMPILER V9.60.0.0   PUBLIC                                                            11/11/2022 15:00:46 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE PUBLIC
+OBJECT MODULE PLACED IN .\Obj\public.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Public\public.c OPTIMIZE(8,SPEED) BROWSE INCDIR(.\App\sg90;.\App\key;.\P
+                    -ublic) DEBUG OBJECTEXTEND PRINT(.\Obj\public.lst) TABS(2) OBJECT(.\Obj\public.obj)
+
+line level    source
+
+   1          # include "public.h"
+   2          
+   3          //初始化定时器T0 
+   4          void T0_init(){
+   5   1          //总中断使能开启
+   6   1          EA = 1;
+   7   1      
+   8   1          //T0 工作模式1
+   9   1          TMOD = 0x01;
+  10   1          
+  11   1          //0.5ms
+  12   1          TH0 = 0xfe;
+  13   1          TL0 = 0x33;
+  14   1      
+  15   1          //中断定时器T0 开启
+  16   1          ET0 = 1;
+  17   1      
+  18   1          //定时器T0 开启
+  19   1          TR0 = 1;
+  20   1      }
+  21          
+  22          //T0 中断函数
+  23          void InterruptTime0() interrupt 1{
+  24   1      
+  25   1          TH0 = 0xfe;
+  26   1          TL0 = 0x33;
+  27   1      
+  28   1          key_Judgement();
+  29   1          
+  30   1          time_cnt ++;
+  31   1          if (time_cnt >= 40) time_cnt = 0;
+  32   1      
+  33   1          if (time_cnt <= time) PWM = 1;
+  34   1          else PWM = 0;
+  35   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    118    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
