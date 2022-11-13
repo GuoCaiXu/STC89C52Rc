@@ -1,0 +1,6 @@
+".\Obj\STARTUP.obj",
+".\Obj\main.obj",
+".\Obj\pwm.obj",
+".\Obj\public.obj" 
+TO ".\Obj\数模转化DAC_PWM呼吸灯" 
+PRINT(".\Obj\数模转化DAC_PWM呼吸灯.m51") RAMSIZE(256) 

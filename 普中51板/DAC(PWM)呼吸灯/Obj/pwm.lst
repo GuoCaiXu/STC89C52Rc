@@ -1,0 +1,85 @@
+C51 COMPILER V9.60.0.0   PWM                                                               11/13/2022 17:23:17 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE PWM
+OBJECT MODULE PLACED IN .\Obj\pwm.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE App\pwm\pwm.c OPTIMIZE(8,SPEED) BROWSE INCDIR(.\App\pwm;.\Public) DEBUG 
+                    -OBJECTEXTEND PRINT(.\Obj\pwm.lst) TABS(2) OBJECT(.\Obj\pwm.obj)
+
+line level    source
+
+   1          # include "pwm.h"
+   2          
+   3          //中断时间
+   4          u8 gtim_h = 0;
+   5          u8 gtim_l = 0;
+   6          
+   7          //周期
+   8          u8 gtim_scale = 0;
+   9          
+  10          //占空比
+  11          u8 gduty = 0;
+  12          
+  13          //pwm 初始化
+  14          void pwm_init(u8 tim_h, u8 tim_l, u8 tim_scale, u8 duty){
+  15   1      
+  16   1          //初始化中断时间和周期占空比
+  17   1          gtim_h = tim_h;
+  18   1          gtim_l = tim_l;
+  19   1          gtim_scale = tim_scale;
+  20   1          gduty = duty;
+  21   1      
+  22   1          //定时器0 工作模式M1
+  23   1          TMOD |= 0x01;
+  24   1      
+  25   1          //中断时间
+  26   1          TH0 = gtim_h;
+  27   1          TL0 = gtim_l;
+  28   1      
+  29   1          //定时器T0 开启
+  30   1          ET0 = 1;
+  31   1      
+  32   1          //总中断开启
+  33   1          EA = 1;
+  34   1      
+  35   1          //定时器T0 开启
+  36   1          TR0  = 1;
+  37   1      }
+  38          
+  39          //传入占空比
+  40          void pwm_set_duty_cycle(u8 duty){
+  41   1          gduty = duty;
+  42   1      }
+  43          
+  44          //中断函数
+  45          void pwm() interrupt 1{
+  46   1      
+  47   1          //记录时间
+  48   1          static u8 time = 0;
+  49   1      
+  50   1          TH0 = gtim_h;
+  51   1          TL0 = gtim_l; 
+  52   1      
+  53   1          time ++;  
+  54   1      
+C51 COMPILER V9.60.0.0   PWM                                                               11/13/2022 17:23:17 PAGE 2   
+
+  55   1          if (time >= gtim_scale) time = 0;
+  56   1      
+  57   1          if (time <= gduty) PWM = 1;
+  58   1          else PWM = 0;
+  59   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     68    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      5       4
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
