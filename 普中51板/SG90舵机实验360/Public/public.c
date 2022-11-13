@@ -22,10 +22,8 @@ void T0_init(){
 //T0 中断函数
 void InterruptTime0() interrupt 1{
 
-    TH0 = 0xfe;
+    TH0 = 0xf3;
     TL0 = 0x33;
-
-    key_Judgement();
     
     time_cnt ++;
     if (time_cnt >= 40) time_cnt = 0;

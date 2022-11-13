@@ -12,12 +12,6 @@ sbit ADDR2 = P2^4;
 //显示数码管
 void smg_ShowLed();
 
-//返回时间初始化数字
-void smg_turn();
-
-//运行时间
-void smg_run();
-
 //显示时间数字
 void smg_ShowNum();
 

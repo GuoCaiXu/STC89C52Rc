@@ -7,6 +7,8 @@ sbit ds1302_IO = P3^4;
 sbit CE = P3^5;
 sbit SCLK = P3^6;
 
+extern u8 ds1302_Time[7];
+
 //写字节函数
 void ds1302_write_byte();
 
@@ -18,9 +20,5 @@ void ds1302_init();
 
 //读时间
 void ds1302_read_time();
-
-//返回时间
-u8 ds1302_turn();
-
 
 # endif

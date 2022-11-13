@@ -32,17 +32,11 @@ void T0_init(){
 void InterruptTime0() interrupt 1{
 
     static u8 i = 0;
-    static u16 cnt = 0;
     i++;
-    cnt++;
 
     TH0 = 0xfc;
     TL0 = 0x66;
 
-    if (cnt == 1000){
-        cnt = 0;
-        smg_run();
-    }
 
     if (i >= 10){
         i = 0;

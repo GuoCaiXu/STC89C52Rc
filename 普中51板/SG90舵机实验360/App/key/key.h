@@ -5,9 +5,10 @@
 
 sbit KEY1 = P3^1;
 sbit KEY2 = P3^0;
+sbit KEY3 = P3^2;
 
-extern u8 sta[2];
-extern u8 bac[2];
+extern u8 sta[3];
+extern u8 bac[3];
 
 //判断函数是否按下
 void key_Judgement();

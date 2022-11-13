@@ -1,0 +1,94 @@
+C51 COMPILER V9.60.0.0   XPT2046                                                           11/13/2022 11:55:15 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE XPT2046
+OBJECT MODULE PLACED IN .\Obj\xpt2046.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE App\xpt2046\xpt2046.c OPTIMIZE(8,SPEED) BROWSE INCDIR(.\Public;.\App\smg
+                    -;.\App\xpt2046) DEBUG OBJECTEXTEND PRINT(.\Obj\xpt2046.lst) TABS(2) OBJECT(.\Obj\xpt2046.obj)
+
+line level    source
+
+   1          # include "xpt2046.h"
+   2          
+   3          //写数据函数
+   4          void xpt2046_write_data(u8 dat){
+   5   1      
+   6   1          u8 i = 0;
+   7   1      
+   8   1          //DCLK 拉低
+   9   1          DCLK = 0;
+  10   1          _nop_();
+  11   1      
+  12   1          for (i = 0; i < 8; i ++){
+  13   2      
+  14   2              DIN = dat >> 7;
+  15   2              dat <<= 1;
+  16   2      
+  17   2              //拉低
+  18   2              DCLK = 0;
+  19   2              _nop_();
+  20   2      
+  21   2              //上升延
+  22   2              DCLK = 1;
+  23   2              _nop_();
+  24   2          }   
+  25   1      }
+  26          
+  27          //读函数
+  28          u16 xpt2046_read_data(){
+  29   1      
+  30   1          u8 i = 0;
+  31   1          u16 dat = 0;
+  32   1      
+  33   1          //DCLK 拉高
+  34   1          DCLK = 1;
+  35   1          _nop_();
+  36   1      
+  37   1          for (i = 0; i < 12; i++){
+  38   2      
+  39   2              dat <<= 1;
+  40   2              //下降延
+  41   2              DCLK = 0;
+  42   2              _nop_();
+  43   2              dat |= DOUT;
+  44   2          }
+  45   1      
+  46   1          return dat;
+  47   1      }
+  48          
+  49          //读adc数据
+  50          u16 xpt2046_read_adc_value(u8 cmd){
+  51   1          u16 adc_value = 0;
+  52   1      
+  53   1          CS = 0;
+  54   1          //写通道
+C51 COMPILER V9.60.0.0   XPT2046                                                           11/13/2022 11:55:15 PAGE 2   
+
+  55   1          xpt2046_write_data(cmd);
+  56   1          
+  57   1          //把盲信号给清除掉
+  58   1          DCLK = 0;
+  59   1          _nop_();
+  60   1          DCLK = 1;
+  61   1          _nop_();
+  62   1      
+  63   1          //读数据
+  64   1          adc_value = xpt2046_read_data();
+  65   1          CS = 1;
+  66   1      
+  67   1          return adc_value;
+  68   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     97    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   DS1302                                                            11/07/2022 13:58:42 PAGE 1   
+C51 COMPILER V9.60.0.0   DS1302                                                            11/13/2022 11:20:58 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE DS1302
@@ -62,7 +62,7 @@ line level    source
   52   1      }
   53          
   54          //读字节函数
-C51 COMPILER V9.60.0.0   DS1302                                                            11/07/2022 13:58:42 PAGE 2   
+C51 COMPILER V9.60.0.0   DS1302                                                            11/13/2022 11:20:58 PAGE 2   
 
   55          u8 ds1302_read_byte(u8 addr){
   56   1          u8 i = 0;
@@ -99,85 +99,65 @@ line level    source
   87   2      
   88   2              //SCLK 拉低
   89   2              SCLK = 0;
-  90   2          }
-  91   1      
-  92   1          //读数据
-  93   1          for (i = 0; i < 8; i++){
-  94   2      
-  95   2              temp = ds1302_IO;
-  96   2              value = (value >> 1) | (temp << 7);
-  97   2      
-  98   2              //SCLK 拉高
-  99   2              SCLK = 1;
- 100   2              _nop_();
- 101   2      
- 102   2              //SCLK 拉低
- 103   2              SCLK = 0;
- 104   2              _nop_();
- 105   2          }
- 106   1      
- 107   1          //CE 拉低
- 108   1          CE = 0;
- 109   1          _nop_();
- 110   1      
- 111   1          //由于没有上拉电阻需要输出
- 112   1          SCLK = 1;
- 113   1          _nop_();
- 114   1          ds1302_IO = 0;
- 115   1          _nop_();
- 116   1          ds1302_IO = 1;
-C51 COMPILER V9.60.0.0   DS1302                                                            11/07/2022 13:58:42 PAGE 3   
+  90   2              _nop_();
+  91   2          }
+  92   1      
+  93   1          //读数据
+  94   1          for (i = 0; i < 8; i++){
+  95   2      
+  96   2              temp = ds1302_IO;
+  97   2              value = (value >> 1) | (temp << 7);
+  98   2      
+  99   2              //SCLK 拉高
+ 100   2              SCLK = 1;
+ 101   2              _nop_();
+ 102   2      
+ 103   2              //SCLK 拉低
+ 104   2              SCLK = 0;
+ 105   2              _nop_();
+ 106   2          }
+ 107   1      
+ 108   1          //CE 拉低
+ 109   1          CE = 0;
+ 110   1          ds1302_IO = 0;
+ 111   1          SCLK = 0;
+ 112   1      
+ 113   1          return value;
+ 114   1      }
+ 115          
+ 116          //ds1302 初始化
+C51 COMPILER V9.60.0.0   DS1302                                                            11/13/2022 11:20:58 PAGE 3   
 
- 117   1          _nop_();
+ 117          void ds1302_init(){
  118   1      
- 119   1          return value;
- 120   1      }
- 121          
- 122          //ds1302 初始化
- 123          void ds1302_init(){
- 124   1      
- 125   1          u8 i = 0;
- 126   1      
- 127   1          //初始化时钟 先把写保护寄存器给关了
- 128   1          ds1302_write_byte(0x8e, 0x00);
- 129   1      
- 130   1          for (i = 0; i < 7; i++){
- 131   2              ds1302_write_byte(ds1302_write_CK[i], ds1302_Time[i]);
- 132   2          }
- 133   1          //初始化完时间再把写保护给开启
- 134   1          ds1302_write_byte(0x8e, 0x8e);
- 135   1      }
- 136          
- 137          //读时间
- 138          void ds1302_read_time(){
- 139   1          u8 i = 0;
- 140   1      
- 141   1          for (i = 0; i < 7; i++){
- 142   2              ds1302_Time[i] = ds1302_read_byte(ds1302_read_CK[i]);
- 143   2          }
- 144   1      
- 145   1      
- 146   1      }
- 147          
- 148          
- 149          //返回时间
- 150          u8 ds1302_turn(){
- 151   1          static u8 i = 0;
- 152   1      
- 153   1          u8 temp = 0;
- 154   1          temp = ds1302_Time[i];
- 155   1          i++;
- 156   1          if (i >= 6) i = 0;
- 157   1          return temp;
- 158   1      }
+ 119   1          u8 i = 0;
+ 120   1      
+ 121   1          //初始化时钟 先把写保护寄存器给关了
+ 122   1          ds1302_write_byte(0x8e, 0x00);
+ 123   1      
+ 124   1          for (i = 0; i < 7; i++){
+ 125   2              ds1302_write_byte(ds1302_write_CK[i], ds1302_Time[i]);
+ 126   2          }
+ 127   1          //初始化完时间再把写保护给开启
+ 128   1          ds1302_write_byte(0x8e, 0x8e);
+ 129   1      }
+ 130          
+ 131          //读时间
+ 132          void ds1302_read_time(){
+ 133   1          u8 i = 0;
+ 134   1      
+ 135   1          for (i = 0; i < 7; i++){
+ 136   2              ds1302_Time[i] = ds1302_read_byte(ds1302_read_CK[i]);
+ 137   2          }
+ 138   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    260    ----
+   CODE SIZE        =    231    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =     22    ----
+   DATA SIZE        =     21    ----
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.

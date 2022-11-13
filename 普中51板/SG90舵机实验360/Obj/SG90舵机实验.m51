@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    11/11/2022  15:00:46  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    11/12/2022  10:24:35  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22.2.0, INVOKED BY:
@@ -27,10 +27,10 @@ LINK MAP OF MODULE:  .\Obj\SG90舵机实验 (?C_STARTUP)
 
             * * * * * * *   D A T A   M E M O R Y   * * * * * * *
             REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
-            DATA    0008H     0004H     UNIT         ?DT?KEY
-            DATA    000CH     0003H     UNIT         ?DT?SG90
-            DATA    000FH     0003H     UNIT         _DATA_GROUP_
-            IDATA   0012H     0001H     UNIT         ?STACK
+            DATA    0008H     0006H     UNIT         ?DT?KEY
+            DATA    000EH     0004H     UNIT         _DATA_GROUP_
+            DATA    0012H     0002H     UNIT         ?DT?SG90
+            IDATA   0014H     0001H     UNIT         ?STACK
 
             * * * * * * *   C O D E   M E M O R Y   * * * * * * *
             CODE    0000H     0003H     ABSOLUTE     
@@ -39,13 +39,13 @@ LINK MAP OF MODULE:  .\Obj\SG90舵机实验 (?C_STARTUP)
                     000EH     07F2H                  *** GAP ***
             CODE    0800H     00F6H     UNIT         ?C?LIB_CODE
             CODE    08F6H     008CH     UNIT         ?C_C51STARTUP
-            CODE    0982H     0066H     UNIT         ?PR?INTERRUPTTIME0?PUBLIC
-            CODE    09E8H     004CH     UNIT         ?PR?KEY_JUDGEMENT?KEY
-            CODE    0A34H     0040H     UNIT         ?PR?MAIN?MAIN
-            CODE    0A74H     003EH     UNIT         ?PR?_KEY_FUN?KEY
-            CODE    0AB2H     0010H     UNIT         ?C_INITSEG
-            CODE    0AC2H     0010H     UNIT         ?PR?T0_INIT?PUBLIC
-            CODE    0AD2H     0002H     UNIT         ?CO?KEY
+            CODE    0982H     0052H     UNIT         ?PR?KEY_JUDGEMENT?KEY
+            CODE    09D4H     0043H     UNIT         ?PR?MAIN?MAIN
+            CODE    0A17H     002AH     UNIT         ?PR?INTERRUPTTIME0?PUBLIC
+            CODE    0A41H     0020H     UNIT         ?PR?_KEY_FUN?KEY
+            CODE    0A61H     0011H     UNIT         ?C_INITSEG
+            CODE    0A72H     0010H     UNIT         ?PR?T0_INIT?PUBLIC
+            CODE    0A82H     0003H     UNIT         ?CO?KEY
 
 
 
@@ -58,19 +58,15 @@ SEGMENT                             DATA_GROUP
 ?C_C51STARTUP                     -----    -----
   +--> ?PR?MAIN?MAIN
 
-?PR?MAIN?MAIN                     000FH    0001H
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/11/2022  15:00:46  PAGE 2
+?PR?MAIN?MAIN                     000EH    0001H
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/12/2022  10:24:35  PAGE 2
 
 
   +--> ?PR?T0_INIT?PUBLIC
+  +--> ?PR?KEY_JUDGEMENT?KEY
   +--> ?PR?_KEY_FUN?KEY
 
-*** NEW ROOT ***************************************************
-
-?PR?INTERRUPTTIME0?PUBLIC         -----    -----
-  +--> ?PR?KEY_JUDGEMENT?KEY
-
-?PR?KEY_JUDGEMENT?KEY             0010H    0002H
+?PR?KEY_JUDGEMENT?KEY             000FH    0003H
   +--> ?CO?KEY
 
 
@@ -82,7 +78,7 @@ SYMBOL TABLE OF MODULE:  .\Obj\SG90舵机实验 (?C_STARTUP)
 
   -------         MODULE        ?C_STARTUP
   C:08F6H         SEGMENT       ?C_C51STARTUP
-  I:0012H         SEGMENT       ?STACK
+  I:0014H         SEGMENT       ?STACK
   C:0000H         PUBLIC        ?C_STARTUP
   D:00E0H         SYMBOL        ACC
   D:00F0H         SYMBOL        B
@@ -119,32 +115,33 @@ SYMBOL TABLE OF MODULE:  .\Obj\SG90舵机实验 (?C_STARTUP)
   D:0090H         PUBLIC        P1
   D:00A0H         PUBLIC        P2
   D:00B0H         PUBLIC        P3
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/11/2022  15:00:46  PAGE 3
-
-
   D:00A8H         PUBLIC        IE
   D:00B8H         PUBLIC        IP
-  C:0A34H         PUBLIC        main
+  C:09D4H         PUBLIC        main
   D:0098H         PUBLIC        SCON
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/12/2022  10:24:35  PAGE 3
+
+
   D:0088H         PUBLIC        TCON
   D:00C8H         PUBLIC        T2CON
   D:00D0H         PUBLIC        PSW
   -------         PROC          MAIN
   -------         DO            
-  D:000FH         SYMBOL        i
+  D:000EH         SYMBOL        i
   -------         ENDDO         
-  C:0A34H         LINE#         3
-  C:0A34H         LINE#         5
-  C:0A37H         LINE#         7
-  C:0A3AH         LINE#         9
-  C:0A3AH         LINE#         10
-  C:0A48H         LINE#         11
-  C:0A58H         LINE#         12
-  C:0A5BH         LINE#         13
-  C:0A62H         LINE#         14
-  C:0A62H         LINE#         15
-  C:0A62H         LINE#         16
-  C:0A70H         LINE#         17
+  C:09D4H         LINE#         3
+  C:09D4H         LINE#         5
+  C:09D7H         LINE#         7
+  C:09DAH         LINE#         9
+  C:09DAH         LINE#         11
+  C:09DDH         LINE#         13
+  C:09EBH         LINE#         14
+  C:09FBH         LINE#         15
+  C:09FEH         LINE#         16
+  C:0A05H         LINE#         17
+  C:0A05H         LINE#         18
+  C:0A05H         LINE#         19
+  C:0A13H         LINE#         20
   -------         ENDPROC       MAIN
   -------         ENDMOD        MAIN
 
@@ -155,10 +152,10 @@ SYMBOL TABLE OF MODULE:  .\Obj\SG90舵机实验 (?C_STARTUP)
   D:00B0H         PUBLIC        P3
   D:00A8H         PUBLIC        IE
   D:00B8H         PUBLIC        IP
-  D:000CH         PUBLIC        time
+  D:0012H         PUBLIC        time
   D:0098H         PUBLIC        SCON
   D:0088H         PUBLIC        TCON
-  D:000EH         PUBLIC        time_cnt
+  D:0013H         PUBLIC        time_cnt
   D:00C8H         PUBLIC        T2CON
   D:00D0H         PUBLIC        PSW
   -------         ENDMOD        SG90
@@ -172,52 +169,53 @@ SYMBOL TABLE OF MODULE:  .\Obj\SG90舵机实验 (?C_STARTUP)
   D:00B8H         PUBLIC        IP
   B:00B0H.1       PUBLIC        KEY1
   B:00B0H.0       PUBLIC        KEY2
+  B:00B0H.2       PUBLIC        KEY3
   D:0008H         PUBLIC        bac
   D:0098H         PUBLIC        SCON
   D:0088H         PUBLIC        TCON
-  C:0AD2H         SYMBOL        _?ix1000
-  D:000AH         PUBLIC        sta
-  C:09E8H         PUBLIC        key_Judgement
+  C:0A82H         SYMBOL        _?ix1000
+  D:000BH         PUBLIC        sta
+  C:0982H         PUBLIC        key_Judgement
   D:00C8H         PUBLIC        T2CON
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/11/2022  15:00:46  PAGE 4
-
-
-  C:0A74H         PUBLIC        _key_fun
+  C:0A41H         PUBLIC        _key_fun
   D:00D0H         PUBLIC        PSW
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/12/2022  10:24:35  PAGE 4
+
+
   -------         PROC          KEY_JUDGEMENT
   -------         DO            
-  D:0010H         SYMBOL        buf
+  D:000FH         SYMBOL        buf
   D:0007H         SYMBOL        i
   -------         ENDDO         
-  C:09E8H         LINE#         7
-  C:09E8H         LINE#         8
-  C:09FBH         LINE#         9
-  C:09FDH         LINE#         11
-  C:0A02H         LINE#         12
-  C:0A08H         LINE#         14
-  C:0A12H         LINE#         15
-  C:0A1CH         LINE#         16
-  C:0A22H         LINE#         17
-  C:0A24H         LINE#         18
-  C:0A2AH         LINE#         19
-  C:0A30H         LINE#         20
-  C:0A30H         LINE#         21
-  C:0A33H         LINE#         22
+  C:0982H         LINE#         7
+  C:0982H         LINE#         8
+  C:0995H         LINE#         9
+  C:0997H         LINE#         11
+  C:099CH         LINE#         12
+  C:09A2H         LINE#         13
+  C:09A8H         LINE#         15
+  C:09B2H         LINE#         16
+  C:09BCH         LINE#         17
+  C:09C2H         LINE#         18
+  C:09C4H         LINE#         19
+  C:09CAH         LINE#         20
+  C:09D0H         LINE#         21
+  C:09D0H         LINE#         22
+  C:09D3H         LINE#         23
   -------         ENDPROC       KEY_JUDGEMENT
   -------         PROC          _KEY_FUN
   D:0007H         SYMBOL        key
-  C:0A74H         LINE#         25
-  C:0A74H         LINE#         26
-  C:0A7CH         LINE#         27
-  C:0A89H         LINE#         28
-  C:0A90H         LINE#         29
-  C:0A90H         LINE#         30
-  C:0A92H         LINE#         31
-  C:0A98H         LINE#         32
-  C:0AA5H         LINE#         33
-  C:0AB1H         LINE#         34
-  C:0AB1H         LINE#         35
-  C:0AB1H         LINE#         36
+  C:0A41H         LINE#         26
+  C:0A41H         LINE#         27
+  C:0A49H         LINE#         28
+  C:0A4CH         LINE#         29
+  C:0A4DH         LINE#         30
+  C:0A53H         LINE#         31
+  C:0A56H         LINE#         32
+  C:0A57H         LINE#         33
+  C:0A5DH         LINE#         34
+  C:0A60H         LINE#         35
+  C:0A60H         LINE#         36
   -------         ENDPROC       _KEY_FUN
   -------         ENDMOD        KEY
 
@@ -228,9 +226,9 @@ SYMBOL TABLE OF MODULE:  .\Obj\SG90舵机实验 (?C_STARTUP)
   D:00B0H         PUBLIC        P3
   B:00A8H.7       PUBLIC        EA
   D:00A8H         PUBLIC        IE
-  C:0982H         PUBLIC        InterruptTime0
+  C:0A17H         PUBLIC        InterruptTime0
   D:00B8H         PUBLIC        IP
-  C:0AC2H         PUBLIC        T0_init
+  C:0A72H         PUBLIC        T0_init
   D:0098H         PUBLIC        SCON
   D:0089H         PUBLIC        TMOD
   D:0088H         PUBLIC        TCON
@@ -239,31 +237,30 @@ SYMBOL TABLE OF MODULE:  .\Obj\SG90舵机实验 (?C_STARTUP)
   D:008AH         PUBLIC        TL0
   B:0088H.4       PUBLIC        TR0
   D:00C8H         PUBLIC        T2CON
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/11/2022  15:00:46  PAGE 5
-
-
   B:00A0H.1       PUBLIC        PWM
   D:00D0H         PUBLIC        PSW
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/12/2022  10:24:35  PAGE 5
+
+
   -------         PROC          T0_INIT
-  C:0AC2H         LINE#         4
-  C:0AC2H         LINE#         6
-  C:0AC4H         LINE#         9
-  C:0AC7H         LINE#         12
-  C:0ACAH         LINE#         13
-  C:0ACDH         LINE#         16
-  C:0ACFH         LINE#         19
-  C:0AD1H         LINE#         20
+  C:0A72H         LINE#         4
+  C:0A72H         LINE#         6
+  C:0A74H         LINE#         9
+  C:0A77H         LINE#         12
+  C:0A7AH         LINE#         13
+  C:0A7DH         LINE#         16
+  C:0A7FH         LINE#         19
+  C:0A81H         LINE#         20
   -------         ENDPROC       T0_INIT
   -------         PROC          INTERRUPTTIME0
-  C:0982H         LINE#         23
-  C:099FH         LINE#         25
-  C:09A2H         LINE#         26
-  C:09A5H         LINE#         28
-  C:09A8H         LINE#         30
-  C:09AAH         LINE#         31
-  C:09B8H         LINE#         33
-  C:09CBH         LINE#         34
-  C:09CDH         LINE#         35
+  C:0A17H         LINE#         23
+  C:0A1BH         LINE#         25
+  C:0A1EH         LINE#         26
+  C:0A21H         LINE#         28
+  C:0A23H         LINE#         29
+  C:0A31H         LINE#         31
+  C:0A3AH         LINE#         32
+  C:0A3CH         LINE#         33
   -------         ENDPROC       INTERRUPTTIME0
   -------         ENDMOD        PUBLIC
 
@@ -275,8 +272,8 @@ SYMBOL TABLE OF MODULE:  .\Obj\SG90舵机实验 (?C_STARTUP)
     SEGMENT: ?C_INITSEG
 
 ******************************************************************************
-* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0163H BYTE (17%) *
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0114H BYTE (13%) *
 ******************************************************************************
 
-Program Size: data=19.0 xdata=0 code=730
+Program Size: data=21.0 xdata=0 code=651
 LINK/LOCATE RUN COMPLETE.  1 WARNING(S),  0 ERROR(S)

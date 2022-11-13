@@ -1,0 +1,7 @@
+".\Obj\STARTUP.obj",
+".\Obj\main.obj",
+".\Obj\smg.obj",
+".\Obj\xpt2046.obj",
+".\Obj\public.obj" 
+TO ".\Obj\XPT2046" 
+PRINT(".\Obj\XPT2046.m51") RAMSIZE(256) 

@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   SG90                                                              11/11/2022 15:00:46 PAGE 1   
+C51 COMPILER V9.60.0.0   SG90                                                              11/12/2022 10:24:35 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE SG90
@@ -10,7 +10,7 @@ line level    source
 
    1          # include "sg90.h"
    2          
-   3          signed int time = 0;
+   3          u8 time = 0;
    4          u8 time_cnt = 0;
 
 
@@ -19,7 +19,7 @@ MODULE INFORMATION:   STATIC OVERLAYABLE
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =      3    ----
+   DATA SIZE        =      2    ----
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.

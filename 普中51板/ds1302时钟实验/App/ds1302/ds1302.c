@@ -87,6 +87,7 @@ u8 ds1302_read_byte(u8 addr){
 
         //SCLK 拉低
         SCLK = 0;
+        _nop_();
     }
 
     //读数据
@@ -106,15 +107,8 @@ u8 ds1302_read_byte(u8 addr){
 
     //CE 拉低
     CE = 0;
-    _nop_();
-
-    //由于没有上拉电阻需要输出
-    SCLK = 1;
-    _nop_();
     ds1302_IO = 0;
-    _nop_();
-    ds1302_IO = 1;
-    _nop_();
+    SCLK = 0;
 
     return value;
 }
@@ -141,18 +135,4 @@ void ds1302_read_time(){
     for (i = 0; i < 7; i++){
         ds1302_Time[i] = ds1302_read_byte(ds1302_read_CK[i]);
     }
-
-
-}
-
-
-//返回时间
-u8 ds1302_turn(){
-    static u8 i = 0;
-
-    u8 temp = 0;
-    temp = ds1302_Time[i];
-    i++;
-    if (i >= 6) i = 0;
-    return temp;
 }

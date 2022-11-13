@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   SMG                                                               11/07/2022 13:58:42 PAGE 1   
+C51 COMPILER V9.60.0.0   SMG                                                               11/13/2022 11:20:58 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE SMG
@@ -16,77 +16,45 @@ line level    source
    6          //数码管缓存区
    7          u8 LedBuff[] = {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
    8          
-   9          //ds1302 时间数据
-  10          u8 time[7];
-  11          
-  12          //显示数码管
-  13          void smg_ShowLed(){
-  14   1          u8 i = 0;
-  15   1      
-  16   1          for (i = 0;i < 8;){
-  17   2              P0 = 0x00;
-  18   2          switch(i){
-  19   3              case 0: ADDR0 = 0; ADDR1 = 0; ADDR2 = 0; i++; P0 = LedBuff[0]; break;
-  20   3              case 1: ADDR0 = 1; ADDR1 = 0; ADDR2 = 0; i++; P0 = LedBuff[1]; break;
-  21   3              case 2: ADDR0 = 0; ADDR1 = 1; ADDR2 = 0; i++; P0 = LedBuff[2]; break;
-  22   3              case 3: ADDR0 = 1; ADDR1 = 1; ADDR2 = 0; i++; P0 = LedBuff[3]; break;
-  23   3              case 4: ADDR0 = 0; ADDR1 = 0; ADDR2 = 1; i++; P0 = LedBuff[4]; break;
-  24   3              case 5: ADDR0 = 1; ADDR1 = 0; ADDR2 = 1; i++; P0 = LedBuff[5]; break;
-  25   3              case 6: ADDR0 = 0; ADDR1 = 1; ADDR2 = 1; i++; P0 = LedBuff[6]; break;
-  26   3              case 7: ADDR0 = 1; ADDR1 = 1; ADDR2 = 1; i=0; P0 = LedBuff[7]; break;
-  27   3          }
-  28   2          }
-  29   1      }
-  30          
-  31          //返回时间初始化数字
-  32          void smg_turn(){
-  33   1          u8 i = 0;
-  34   1      
-  35   1          for (i = 0; i < 7; i++){
-  36   2              time[i] = ds1302_turn();
-  37   2          }
-  38   1      }
-  39          
-  40          //运行时间
-  41          void smg_run(){
-  42   1      
-  43   1          time[0]++;
-  44   1      
-  45   1          if (time[0] == 0x59){
-  46   2              time[0] = 0;
-  47   2              time[1]++;
-  48   2          }
-  49   1          if (time[1] == 0x59){
-  50   2              time[1] = 0;
-  51   2              time[2]++;
-  52   2          }
-  53   1          if (time[2] == 0x24){
-  54   2              time[2] = 0;
-C51 COMPILER V9.60.0.0   SMG                                                               11/07/2022 13:58:42 PAGE 2   
-
-  55   2          }
-  56   1      }
-  57          
-  58          //显示时间数字
-  59          void smg_ShowNum(){
-  60   1      
-  61   1              LedBuff[7] = LedChar[time[2]/16];
-  62   1              LedBuff[6] = LedChar[time[2]%16];
-  63   1              LedBuff[5] = 0x40;
-  64   1              LedBuff[4] = LedChar[time[1]/16];
-  65   1              LedBuff[3] = LedChar[time[1]%16];
-  66   1              LedBuff[2] = 0x40;
-  67   1              LedBuff[1] = LedChar[time[0]/16];
-  68   1              LedBuff[0] = LedChar[time[0]%16];
-  69   1      }
+   9          //显示数码管
+  10          void smg_ShowLed(){
+  11   1          u8 i = 0;
+  12   1      
+  13   1          for (i = 0;i < 8;){
+  14   2              P0 = 0x00;
+  15   2          switch(i){
+  16   3              case 0: ADDR0 = 0; ADDR1 = 0; ADDR2 = 0; i++; P0 = LedBuff[0]; break;
+  17   3              case 1: ADDR0 = 1; ADDR1 = 0; ADDR2 = 0; i++; P0 = LedBuff[1]; break;
+  18   3              case 2: ADDR0 = 0; ADDR1 = 1; ADDR2 = 0; i++; P0 = LedBuff[2]; break;
+  19   3              case 3: ADDR0 = 1; ADDR1 = 1; ADDR2 = 0; i++; P0 = LedBuff[3]; break;
+  20   3              case 4: ADDR0 = 0; ADDR1 = 0; ADDR2 = 1; i++; P0 = LedBuff[4]; break;
+  21   3              case 5: ADDR0 = 1; ADDR1 = 0; ADDR2 = 1; i++; P0 = LedBuff[5]; break;
+  22   3              case 6: ADDR0 = 0; ADDR1 = 1; ADDR2 = 1; i++; P0 = LedBuff[6]; break;
+  23   3              case 7: ADDR0 = 1; ADDR1 = 1; ADDR2 = 1; i=0; P0 = LedBuff[7]; break;
+  24   3          }
+  25   2          }
+  26   1      }
+  27          
+  28          //显示时间数字
+  29          void smg_ShowNum(){
+  30   1      
+  31   1              LedBuff[7] = LedChar[ds1302_Time[2]/16];
+  32   1              LedBuff[6] = LedChar[ds1302_Time[2]%16];
+  33   1              LedBuff[5] = 0x40;
+  34   1              LedBuff[4] = LedChar[ds1302_Time[1]/16];
+  35   1              LedBuff[3] = LedChar[ds1302_Time[1]%16];
+  36   1              LedBuff[2] = 0x40;
+  37   1              LedBuff[1] = LedChar[ds1302_Time[0]/16];
+  38   1              LedBuff[0] = LedChar[ds1302_Time[0]%16];
+  39   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    272    ----
+   CODE SIZE        =    210    ----
    CONSTANT SIZE    =     10    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =     15       1
+   DATA SIZE        =      8    ----
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
