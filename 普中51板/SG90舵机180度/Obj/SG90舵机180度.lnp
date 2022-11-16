@@ -1,0 +1,7 @@
+".\Obj\STARTUP.obj",
+".\Obj\main.obj",
+".\Obj\key.obj",
+".\Obj\sg90.obj",
+".\Obj\public.obj" 
+TO ".\Obj\SG90舵机180度" 
+PRINT(".\Obj\SG90舵机180度.m51") RAMSIZE(256) 

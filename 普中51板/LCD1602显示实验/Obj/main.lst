@@ -1,0 +1,38 @@
+C51 COMPILER V9.60.0.0   MAIN                                                              11/16/2022 13:30:46 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Obj\main.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE User\main.c OPTIMIZE(8,SPEED) BROWSE INCDIR(.\Public;.\App\lcd1602) DEBU
+                    -G OBJECTEXTEND PRINT(.\Obj\main.lst) TABS(2) OBJECT(.\Obj\main.obj)
+
+line level    source
+
+   1          # include "public.h"
+   2          # include "lcd1602.h"
+   3          
+   4          void main(){
+   5   1      
+   6   1          //lcd1602初始化
+   7   1          lcd1602_init();
+   8   1      
+   9   1          //显示字符串
+  10   1          lcd1602_show_string(0, 0,"Yu Anling");
+  11   1          lcd1602_show_string(0, 1,"is a dog!");
+  12   1      
+  13   1          while(1);
+  14   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     30    ----
+   CONSTANT SIZE    =     20    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

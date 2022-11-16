@@ -1,0 +1,311 @@
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    11/16/2022  10:34:47  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22.2.0, INVOKED BY:
+C:\KEIL_V5\C51\BIN\BL51.EXE .\Obj\STARTUP.obj, .\Obj\main.obj, .\Obj\key.obj, .\Obj\sg90.obj, .\Obj\public.obj TO .\Obj\
+>> SG90舵机180度 PRINT (.\Obj\SG90舵机180度.m51) RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Obj\STARTUP.obj (?C_STARTUP)
+  .\Obj\main.obj (MAIN)
+  .\Obj\key.obj (KEY)
+  .\Obj\sg90.obj (SG90)
+  .\Obj\public.obj (PUBLIC)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C_INIT)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?COPY)
+
+
+LINK MAP OF MODULE:  .\Obj\SG90舵机180度 (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0006H     UNIT         ?DT?KEY
+            DATA    000EH     0006H     UNIT         _DATA_GROUP_
+            DATA    0014H     0005H     UNIT         ?DT?SG90
+            IDATA   0019H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     0008H                  *** GAP ***
+            CODE    000BH     0003H     ABSOLUTE     
+                    000EH     07F2H                  *** GAP ***
+            CODE    0800H     00F6H     UNIT         ?C?LIB_CODE
+            CODE    08F6H     008CH     UNIT         ?C_C51STARTUP
+            CODE    0982H     005AH     UNIT         ?PR?MAIN?MAIN
+            CODE    09DCH     004CH     UNIT         ?PR?KEY_PICK?KEY
+            CODE    0A28H     0044H     UNIT         ?PR?PWM?SG90
+            CODE    0A6CH     002EH     UNIT         ?PR?KEY_JUDGEMENT?KEY
+            CODE    0A9AH     001EH     UNIT         ?C_INITSEG
+            CODE    0AB8H     0019H     UNIT         ?PR?_PWM_INIT?SG90
+            CODE    0AD1H     0003H     UNIT         ?PR?_PWM_SET_DUTY?SG90
+            CODE    0AD4H     0002H     UNIT         ?CO?KEY
+
+
+
+OVERLAY MAP OF MODULE:   .\Obj\SG90舵机180度 (?C_STARTUP)
+
+
+SEGMENT                          DATA_GROUP 
+  +--> CALLED SEGMENT          START    LENGTH
+----------------------------------------------
+?C_C51STARTUP                  -----    -----
+  +--> ?PR?MAIN?MAIN
+  +--> ?C_INITSEG
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/16/2022  10:34:47  PAGE 2
+
+
+
+?PR?MAIN?MAIN                  000EH    0002H
+  +--> ?PR?_PWM_INIT?SG90
+  +--> ?PR?KEY_PICK?KEY
+  +--> ?PR?KEY_JUDGEMENT?KEY
+  +--> ?PR?_PWM_SET_DUTY?SG90
+
+?PR?_PWM_INIT?SG90             0010H    0004H
+
+?PR?KEY_PICK?KEY               0010H    0002H
+  +--> ?CO?KEY
+
+
+
+SYMBOL TABLE OF MODULE:  .\Obj\SG90舵机180度 (?C_STARTUP)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ?C_STARTUP
+  C:08F6H         SEGMENT       ?C_C51STARTUP
+  I:0019H         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:00E0H         SYMBOL        ACC
+  D:00F0H         SYMBOL        B
+  D:0083H         SYMBOL        DPH
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:08F9H         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0100H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:08F6H         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         126
+  C:08F6H         LINE#         133
+  C:08F8H         LINE#         134
+  C:08F9H         LINE#         135
+  C:08FAH         LINE#         136
+  C:08FCH         LINE#         185
+  C:08FFH         LINE#         196
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/16/2022  10:34:47  PAGE 3
+
+
+  D:00B0H         PUBLIC        P3
+  D:00A8H         PUBLIC        IE
+  D:00B8H         PUBLIC        IP
+  C:0982H         PUBLIC        main
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  D:00C8H         PUBLIC        T2CON
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          MAIN
+  -------         DO            
+  D:000EH         SYMBOL        key
+  D:000FH         SYMBOL        duty
+  -------         ENDDO         
+  C:0982H         LINE#         5
+  C:0982H         LINE#         7
+  C:0985H         LINE#         8
+  C:0987H         LINE#         11
+  C:0993H         LINE#         13
+  C:0993H         LINE#         16
+  C:0996H         LINE#         19
+  C:099BH         LINE#         20
+  C:09A0H         LINE#         21
+  C:09B2H         LINE#         22
+  C:09B4H         LINE#         24
+  C:09B9H         LINE#         25
+  C:09B9H         LINE#         26
+  C:09BBH         LINE#         27
+  C:09C1H         LINE#         28
+  C:09D3H         LINE#         29
+  C:09D5H         LINE#         31
+  C:09DAH         LINE#         32
+  C:09DAH         LINE#         33
+  C:09DAH         LINE#         34
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        MAIN
+
+  -------         MODULE        KEY
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00B0H         PUBLIC        P3
+  D:00A8H         PUBLIC        IE
+  D:00B8H         PUBLIC        IP
+  B:00B0H.1       PUBLIC        KEY1
+  B:00B0H.0       PUBLIC        KEY2
+  D:0008H         PUBLIC        key_gtim_h
+  D:0009H         PUBLIC        key_gtim_l
+  D:000AH         PUBLIC        KeyBac
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  C:0AD4H         SYMBOL        _?ix1000
+  D:000CH         PUBLIC        KeySta
+  C:09DCH         PUBLIC        key_pick
+  C:0A6CH         PUBLIC        key_Judgement
+  D:00C8H         PUBLIC        T2CON
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          KEY_JUDGEMENT
+  -------         DO            
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/16/2022  10:34:47  PAGE 4
+
+
+  D:0007H         SYMBOL        i
+  D:0006H         SYMBOL        key
+  -------         ENDDO         
+  C:0A6CH         LINE#         9
+  C:0A6CH         LINE#         10
+  C:0A6EH         LINE#         11
+  C:0A6FH         LINE#         13
+  C:0A79H         LINE#         14
+  C:0A88H         LINE#         15
+  C:0A8BH         LINE#         16
+  C:0A8EH         LINE#         17
+  C:0A8EH         LINE#         18
+  C:0A94H         LINE#         19
+  C:0A94H         LINE#         20
+  C:0A97H         LINE#         21
+  C:0A99H         LINE#         22
+  -------         ENDPROC       KEY_JUDGEMENT
+  -------         PROC          KEY_PICK
+  -------         DO            
+  D:0010H         SYMBOL        KeyBuf
+  D:0007H         SYMBOL        i
+  -------         ENDDO         
+  C:09DCH         LINE#         25
+  C:09DCH         LINE#         26
+  C:09EFH         LINE#         27
+  C:09F1H         LINE#         29
+  C:09F6H         LINE#         30
+  C:09FCH         LINE#         32
+  C:0A06H         LINE#         33
+  C:0A18H         LINE#         34
+  C:0A24H         LINE#         35
+  C:0A27H         LINE#         36
+  -------         ENDPROC       KEY_PICK
+  -------         ENDMOD        KEY
+
+  -------         MODULE        SG90
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0015H         PUBLIC        gtim_l
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  B:00A8H.7       PUBLIC        EA
+  D:00A8H         PUBLIC        IE
+  D:00B8H         PUBLIC        IP
+  D:0016H         PUBLIC        gtim_scale
+  C:0AD1H         PUBLIC        _pwm_set_duty
+  D:0017H         PUBLIC        gduty
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  B:00A8H.1       PUBLIC        ET0
+  D:008CH         PUBLIC        TH0
+  D:008AH         PUBLIC        TL0
+  C:0A28H         PUBLIC        pwm
+  B:0088H.4       PUBLIC        TR0
+  D:00C8H         PUBLIC        T2CON
+  C:0AB8H         PUBLIC        _pwm_init
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/16/2022  10:34:47  PAGE 5
+
+
+  B:00A0H.1       PUBLIC        PWM
+  D:00D0H         PUBLIC        PSW
+  D:0018H         PUBLIC        gtim_h
+  -------         PROC          _PWM_INIT
+  D:0007H         SYMBOL        tim_h
+  D:0005H         SYMBOL        tim_l
+  D:0003H         SYMBOL        tim_scale
+  D:0013H         SYMBOL        duty
+  C:0AB8H         LINE#         11
+  C:0AB8H         LINE#         14
+  C:0ABAH         LINE#         15
+  C:0ABCH         LINE#         16
+  C:0ABEH         LINE#         17
+  C:0AC1H         LINE#         20
+  C:0AC4H         LINE#         23
+  C:0AC7H         LINE#         24
+  C:0ACAH         LINE#         27
+  C:0ACCH         LINE#         30
+  C:0ACEH         LINE#         33
+  C:0AD0H         LINE#         34
+  -------         ENDPROC       _PWM_INIT
+  -------         PROC          _PWM_SET_DUTY
+  D:0007H         SYMBOL        duty
+  C:0AD1H         LINE#         37
+  C:0AD1H         LINE#         38
+  C:0AD3H         LINE#         39
+  -------         ENDPROC       _PWM_SET_DUTY
+  -------         PROC          PWM
+  -------         DO            
+  D:0014H         SYMBOL        time
+  -------         ENDDO         
+  C:0A28H         LINE#         42
+  C:0A35H         LINE#         46
+  C:0A38H         LINE#         47
+  C:0A3BH         LINE#         49
+  C:0A3DH         LINE#         51
+  C:0A47H         LINE#         53
+  C:0A5FH         LINE#         54
+  C:0A61H         LINE#         55
+  -------         ENDPROC       PWM
+  -------         ENDMOD        SG90
+
+  -------         MODULE        PUBLIC
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00B0H         PUBLIC        P3
+  D:00A8H         PUBLIC        IE
+  D:00B8H         PUBLIC        IP
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  D:00C8H         PUBLIC        T2CON
+  D:00D0H         PUBLIC        PSW
+  -------         ENDMOD        PUBLIC
+
+  -------         MODULE        ?C?COPY
+  C:08D0H         PUBLIC        ?C?COPY
+  -------         ENDMOD        ?C?COPY
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/16/2022  10:34:47  PAGE 6
+
+
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0165H BYTE (17%) *
+******************************************************************************
+
+Program Size: data=26.0 xdata=0 code=732
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)
