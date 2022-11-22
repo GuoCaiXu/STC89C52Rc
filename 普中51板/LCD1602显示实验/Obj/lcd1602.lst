@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   LCD1602                                                           11/16/2022 13:30:46 PAGE 1   
+C51 COMPILER V9.60.0.0   LCD1602                                                           11/17/2022 13:15:16 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE LCD1602
@@ -62,7 +62,7 @@ line level    source
   52   1          lcd1602_write_cmd(0x0c);
   53   1          //模式设置指令 光标向右移动
   54   1          lcd1602_write_cmd(0x06);
-C51 COMPILER V9.60.0.0   LCD1602                                                           11/16/2022 13:30:46 PAGE 2   
+C51 COMPILER V9.60.0.0   LCD1602                                                           11/17/2022 13:15:16 PAGE 2   
 
   55   1          //清屏指令
   56   1          lcd1602_write_cmd(0x01);
@@ -81,7 +81,7 @@ line level    source
   69   3                      lcd1602_write_cmd(0x80 + x + i); //第1 行
   70   3                  else 
   71   3                      lcd1602_write_cmd(0x80 + 0x40 + x + i - 16); //第2 行
-  72   3                      //写入显示内容
+  72   3                  //写入显示内容
   73   3                  lcd1602_write_data(*str);
   74   3                  str++;
   75   3                  i++;
@@ -94,17 +94,18 @@ line level    source
   82   3                  lcd1602_write_cmd(0x80 + 0x40 + x + i);
   83   3              else 
   84   3                  lcd1602_write_cmd(0x80 + x + i - 16);
-  85   3                  lcd1602_write_data(*str);
-  86   3              str++;
-  87   3              i++;
-  88   3               }
-  89   2          }
-  90   1      }
-  91          
-  92          //清屏幕
-  93          void lcd1602_clear(){
-  94   1          lcd1602_write_cmd(0x01);
-  95   1      }
+  85   3              //写入显示内容
+  86   3              lcd1602_write_data(*str);
+  87   3              str++;
+  88   3              i++;
+  89   3               }
+  90   2          }
+  91   1      }
+  92          
+  93          //清屏幕
+  94          void lcd1602_clear(){
+  95   1          lcd1602_write_cmd(0x01);
+  96   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE

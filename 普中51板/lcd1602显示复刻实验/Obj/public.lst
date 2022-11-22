@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   PUBLIC                                                            11/17/2022 13:15:16 PAGE 1   
+C51 COMPILER V9.60.0.0   PUBLIC                                                            11/17/2022 14:15:24 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE PUBLIC
@@ -11,16 +11,16 @@ line level    source
    1          # include "public.h"
    2          
    3          //延时函数 ms
-   4          void delay_ms(u16 z){
-   5   1          u16 i;
+   4          void delay_ms(u8 z){
+   5   1          u8 i;
    6   1          while(z --){
-   7   2              for (i = 110; i > 0; i --);
+   7   2              for (i = 0; i < 120; i++);
    8   2          }
    9   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =     33    ----
+   CODE SIZE        =     22    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----

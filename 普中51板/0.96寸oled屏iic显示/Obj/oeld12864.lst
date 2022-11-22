@@ -1,0 +1,219 @@
+C51 COMPILER V9.60.0.0   OELD12864                                                         11/19/2022 15:56:21 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE OELD12864
+OBJECT MODULE PLACED IN .\Obj\oeld12864.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE oeld12864\oeld12864.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(
+                    -.\Obj\oeld12864.lst) TABS(2) OBJECT(.\Obj\oeld12864.obj)
+
+line level    source
+
+   1          # include "oeld12864.h"
+*** WARNING C318 IN LINE 4 OF oeld12864\oeld12864.h: can't open file 'public.h'
+*** ERROR C202 IN LINE 11 OF oeld12864\oeld12864.h: 'P1': undefined identifier
+*** ERROR C202 IN LINE 12 OF oeld12864\oeld12864.h: 'P1': undefined identifier
+*** ERROR C141 IN LINE 21 OF oeld12864\oeld12864.h: syntax error near 'iic_byte', expected ')'
+*** ERROR C141 IN LINE 24 OF oeld12864\oeld12864.h: syntax error near 'iic_Data', expected ')'
+*** ERROR C141 IN LINE 27 OF oeld12864\oeld12864.h: syntax error near 'iic_Cmd', expected ')'
+*** ERROR C141 IN LINE 32 OF oeld12864\oeld12864.h: syntax error near 'bmp_dat', expected ')'
+*** ERROR C141 IN LINE 39 OF oeld12864\oeld12864.h: syntax error near 'x', expected ')'
+   2          
+   3          //iic 起始信号
+   4          void iic_start(){
+   5   1      
+   6   1          SCL = 1;
+*** ERROR C202 IN LINE 6 OF oeld12864\oeld12864.c: 'SCL': undefined identifier
+   7   1          SDA = 1;
+*** ERROR C202 IN LINE 7 OF oeld12864\oeld12864.c: 'SDA': undefined identifier
+   8   1          SDA = 0;
+*** ERROR C202 IN LINE 8 OF oeld12864\oeld12864.c: 'SDA': undefined identifier
+   9   1          SCL = 0;
+*** ERROR C202 IN LINE 9 OF oeld12864\oeld12864.c: 'SCL': undefined identifier
+  10   1      }
+  11          
+  12          //iic 结束信号
+  13          void iic_stop(){
+  14   1          SCL = 0;
+*** ERROR C202 IN LINE 14 OF oeld12864\oeld12864.c: 'SCL': undefined identifier
+  15   1          SDA = 0;
+*** ERROR C202 IN LINE 15 OF oeld12864\oeld12864.c: 'SDA': undefined identifier
+  16   1          SCL = 1;
+*** ERROR C202 IN LINE 16 OF oeld12864\oeld12864.c: 'SCL': undefined identifier
+  17   1          SDA = 1;
+*** ERROR C202 IN LINE 17 OF oeld12864\oeld12864.c: 'SDA': undefined identifier
+  18   1      }
+  19          
+  20          //iic 写字节函数
+  21          void iic_write_byte(u8 iic_byte){
+*** ERROR C141 IN LINE 21 OF oeld12864\oeld12864.c: syntax error near 'iic_byte', expected ')'
+  22   1      
+  23   1          u8 i = 0;
+*** ERROR C141 IN LINE 23 OF oeld12864\oeld12864.c: syntax error near 'i', expected ';'
+*** ERROR C202 IN LINE 23 OF oeld12864\oeld12864.c: 'i': undefined identifier
+  24   1          for(i = 0; i < 8; i ++){
+*** ERROR C202 IN LINE 24 OF oeld12864\oeld12864.c: 'i': undefined identifier
+  25   2              
+  26   2              //判断高位是否为1
+  27   2              if (iic_byte & 0x80) SDA = 1;
+*** ERROR C202 IN LINE 27 OF oeld12864\oeld12864.c: 'iic_byte': undefined identifier
+*** ERROR C202 IN LINE 27 OF oeld12864\oeld12864.c: 'SDA': undefined identifier
+  28   2              else SDA = 0;
+*** ERROR C202 IN LINE 28 OF oeld12864\oeld12864.c: 'SDA': undefined identifier
+  29   2      
+  30   2              SCL = 1;
+*** ERROR C202 IN LINE 30 OF oeld12864\oeld12864.c: 'SCL': undefined identifier
+C51 COMPILER V9.60.0.0   OELD12864                                                         11/19/2022 15:56:21 PAGE 2   
+
+  31   2              SCL = 0;
+*** ERROR C202 IN LINE 31 OF oeld12864\oeld12864.c: 'SCL': undefined identifier
+  32   2              //传输完一位左移一位
+  33   2              iic_byte <<= 1;
+*** ERROR C202 IN LINE 33 OF oeld12864\oeld12864.c: 'iic_byte': undefined identifier
+  34   2          }
+  35   1      
+  36   1          SDA = 1;
+*** ERROR C202 IN LINE 36 OF oeld12864\oeld12864.c: 'SDA': undefined identifier
+  37   1          SCL = 1;
+*** ERROR C202 IN LINE 37 OF oeld12864\oeld12864.c: 'SCL': undefined identifier
+  38   1          SCL = 0;
+*** ERROR C202 IN LINE 38 OF oeld12864\oeld12864.c: 'SCL': undefined identifier
+  39   1      }
+  40          
+  41          //oeld 写数据
+  42          void oled_WrDat(u8 iic_Data){
+*** ERROR C141 IN LINE 42 OF oeld12864\oeld12864.c: syntax error near 'iic_Data', expected ')'
+  43   1      
+  44   1          //起始信号
+  45   1          iic_start();
+  46   1          //ssd1306 的寻机地址
+  47   1          iic_write_byte(0x78);
+  48   1          //写数据
+  49   1          iic_write_byte(0x40);
+  50   1          //写数据
+  51   1          iic_write_byte(iic_Data);
+*** ERROR C202 IN LINE 51 OF oeld12864\oeld12864.c: 'iic_Data': undefined identifier
+  52   1          //停止信号
+  53   1          iic_stop();
+  54   1      }
+  55          
+  56          //oeld 写命令
+  57          void oled_WrCmd(u8 iic_Cmd){
+*** ERROR C141 IN LINE 57 OF oeld12864\oeld12864.c: syntax error near 'iic_Cmd', expected ')'
+  58   1      
+  59   1          iic_start();
+  60   1          iic_write_byte(0x78);
+  61   1          //写命令
+  62   1          iic_write_byte(0x00);
+  63   1          //写入命令
+  64   1          iic_write_byte(iic_Cmd);
+*** ERROR C202 IN LINE 64 OF oeld12864\oeld12864.c: 'iic_Cmd': undefined identifier
+  65   1          iic_stop();
+  66   1      }
+  67          
+  68          //设置显示位置
+  69          void oled_Set_Pos(){
+  70   1          
+  71   1          //从第几行显示
+  72   1         oled_WrCmd(0xb0 + y);  //0xb0 代表第0 行
+*** ERROR C202 IN LINE 72 OF oeld12864\oeld12864.c: 'y': undefined identifier
+  73   1         oled_WrCmd(((x & 0xf0) >> 4) | 0x10);
+*** ERROR C202 IN LINE 73 OF oeld12864\oeld12864.c: 'x': undefined identifier
+  74   1         oled_WrCmd((x & 0x0f) | 0x01);
+*** ERROR C202 IN LINE 74 OF oeld12864\oeld12864.c: 'x': undefined identifier
+  75   1      }
+  76          
+  77          void oled_Fill(u8 bmp_dat){
+*** ERROR C141 IN LINE 77 OF oeld12864\oeld12864.c: syntax error near 'bmp_dat', expected ')'
+  78   1      
+  79   1          u8 x, y;
+C51 COMPILER V9.60.0.0   OELD12864                                                         11/19/2022 15:56:21 PAGE 3   
+
+*** ERROR C141 IN LINE 79 OF oeld12864\oeld12864.c: syntax error near 'x', expected ';'
+*** ERROR C202 IN LINE 79 OF oeld12864\oeld12864.c: 'x': undefined identifier
+  80   1      
+  81   1          for (y = 0; y < 8; y ++){
+*** ERROR C202 IN LINE 81 OF oeld12864\oeld12864.c: 'y': undefined identifier
+  82   2              
+  83   2              oled_WrCmd(0xb0 + y);
+*** ERROR C202 IN LINE 83 OF oeld12864\oeld12864.c: 'y': undefined identifier
+  84   2              oled_WrCmd(0x01);
+  85   2              oled_WrCmd(0x10);
+  86   2              for (x = 0; x < X_WIDTH; x ++)
+*** ERROR C202 IN LINE 86 OF oeld12864\oeld12864.c: 'x': undefined identifier
+  87   2                  oled_WrDat(bmp_dat);
+*** ERROR C202 IN LINE 87 OF oeld12864\oeld12864.c: 'bmp_dat': undefined identifier
+  88   2          }
+  89   1      }
+  90          
+  91          void oled_CLS(){
+  92   1      
+  93   1          u8 y, x;
+*** ERROR C202 IN LINE 93 OF oeld12864\oeld12864.c: 'u8': undefined identifier
+*** ERROR C141 IN LINE 93 OF oeld12864\oeld12864.c: syntax error near 'y', expected ';'
+  94   1      
+  95   1          for (y = 0; y < 8; y ++){
+*** ERROR C202 IN LINE 95 OF oeld12864\oeld12864.c: 'y': undefined identifier
+  96   2              oled_WrCmd(0xb0 + y);
+*** ERROR C202 IN LINE 96 OF oeld12864\oeld12864.c: 'y': undefined identifier
+  97   2              oled_WrCmd(0x01);
+  98   2              oled_WrCmd(0x10);
+  99   2              
+ 100   2              for (x = 0; x < X_WIDTH; x ++)
+*** ERROR C202 IN LINE 100 OF oeld12864\oeld12864.c: 'x': undefined identifier
+ 101   2                  oled_WrDat(0);
+ 102   2          }
+ 103   1      }
+ 104          
+ 105          //初始化
+ 106          void oled_init(){
+ 107   1          delay(500);//��ʼ��֮ǰ����ʱ����Ҫ��
+ 108   1        OLED_WrCmd(0xae);//--turn off oled panel
+ 109   1        OLED_WrCmd(0x00);//---set low column address
+ 110   1        OLED_WrCmd(0x10);//---set high column address
+ 111   1        OLED_WrCmd(0x40);//--set start line address  Set Mapping RAM Display Start Line (0x00~0x3F)
+ 112   1        OLED_WrCmd(0x81);//--set contrast control register
+ 113   1        OLED_WrCmd(Brightness); // Set SEG Output Current Brightness
+ 114   1        OLED_WrCmd(0xa1);//--Set SEG/Column Mapping     0xa0���ҷ��� 0xa1����
+ 115   1        OLED_WrCmd(0xc8);//Set COM/Row Scan Direction   0xc0���·��� 0xc8����
+ 116   1        OLED_WrCmd(0xa6);//--set normal display
+ 117   1        OLED_WrCmd(0xa8);//--set multiplex ratio(1 to 64)
+ 118   1        OLED_WrCmd(0x3f);//--1/64 duty
+ 119   1        OLED_WrCmd(0xd3);//-set display offset  Shift Mapping RAM Counter (0x00~0x3F)
+ 120   1        OLED_WrCmd(0x00);//-not offset
+ 121   1        OLED_WrCmd(0xd5);//--set display clock divide ratio/oscillator frequency
+ 122   1        OLED_WrCmd(0x80);//--set divide ratio, Set Clock as 100 Frames/Sec
+ 123   1        OLED_WrCmd(0xd9);//--set pre-charge period
+ 124   1        OLED_WrCmd(0xf1);//Set Pre-Charge as 15 Clocks & Discharge as 1 Clock
+ 125   1        OLED_WrCmd(0xda);//--set com pins hardware configuration
+ 126   1        OLED_WrCmd(0x12);
+ 127   1        OLED_WrCmd(0xdb);//--set vcomh
+ 128   1        OLED_WrCmd(0x40);//Set VCOM Deselect Level
+ 129   1        OLED_WrCmd(0x20);//-Set Page Addressing Mode (0x00/0x01/0x02)
+ 130   1        OLED_WrCmd(0x02);//
+C51 COMPILER V9.60.0.0   OELD12864                                                         11/19/2022 15:56:21 PAGE 4   
+
+ 131   1        OLED_WrCmd(0x8d);//--set Charge Pump enable/disable
+ 132   1        OLED_WrCmd(0x14);//--set(0x10) disable
+ 133   1        OLED_WrCmd(0xa4);// Disable Entire Display On (0xa4/0xa5)
+ 134   1        OLED_WrCmd(0xa6);// Disable Inverse Display On (0xa6/a7) 
+ 135   1        OLED_WrCmd(0xaf);//--turn on oled panel
+ 136   1        OLED_Fill(0x00);
+ 137   1        OLED_Set_Pos(0,0);
+ 138   1      }
+ 139          
+ 140          void oled_P6x8Str(u8 x, u8 y, u8 ch[]){
+ 141   1      
+ 142   1          u8 c = 0, i = 0, j = 0;
+ 143   1      
+ 144   1          while(ch[j] != '\0'){
+ 145   2      
+ 146   2              c = ch[j] - 32;
+ 147   2      
+ 148   2              if (x > 126){
+ 149   3                  x = 0; y ++;
+ 150   3              }
+ 151   2              OLED_Set_Pos(x, y);
+ 152   2          }
+ 153   1      }
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  47 ERROR(S)

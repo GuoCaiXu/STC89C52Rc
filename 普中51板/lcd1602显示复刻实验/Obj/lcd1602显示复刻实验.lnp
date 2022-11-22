@@ -1,0 +1,6 @@
+".\Obj\STARTUP.obj",
+".\Obj\main.obj",
+".\Obj\lcd1602.obj",
+".\Obj\public.obj" 
+TO ".\Obj\lcd1602显示复刻实验" 
+PRINT(".\Obj\lcd1602显示复刻实验.m51") RAMSIZE(256) 

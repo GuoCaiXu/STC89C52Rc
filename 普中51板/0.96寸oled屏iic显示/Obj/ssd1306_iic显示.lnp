@@ -1,0 +1,4 @@
+".\Obj\STARTUP.obj",
+".\Obj\OLED12864.obj" 
+TO ".\Obj\ssd1306_iicœ‘ æ" 
+PRINT(".\Obj\ssd1306_iicœ‘ æ.m51") RAMSIZE(256) 

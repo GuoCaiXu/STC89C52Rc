@@ -69,7 +69,7 @@ void lcd1602_show_string(u8 x, u8 y, u8 *str){
                 lcd1602_write_cmd(0x80 + x + i); //第1 行
             else 
                 lcd1602_write_cmd(0x80 + 0x40 + x + i - 16); //第2 行
-                //写入显示内容
+            //写入显示内容
             lcd1602_write_data(*str);
             str++;
             i++;
@@ -82,7 +82,8 @@ void lcd1602_show_string(u8 x, u8 y, u8 *str){
             lcd1602_write_cmd(0x80 + 0x40 + x + i);
         else 
             lcd1602_write_cmd(0x80 + x + i - 16);
-            lcd1602_write_data(*str);
+        //写入显示内容
+        lcd1602_write_data(*str);
         str++;
         i++;
          }

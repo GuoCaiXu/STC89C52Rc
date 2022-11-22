@@ -1,0 +1,120 @@
+C51 COMPILER V9.60.0.0   LCD1602                                                           11/17/2022 14:15:24 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE LCD1602
+OBJECT MODULE PLACED IN .\Obj\lcd1602.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE App\lcd1602\lcd1602.c OPTIMIZE(8,SPEED) BROWSE INCDIR(.\Public;.\App\lcd
+                    -1602) DEBUG OBJECTEXTEND PRINT(.\Obj\lcd1602.lst) TABS(2) OBJECT(.\Obj\lcd1602.obj)
+
+line level    source
+
+   1          # include "lcd1602.h"
+   2          
+   3          //写命令
+   4          void lcd1602_write_cmd(u8 cmd){
+   5   1          //通过RS 设置写命令功能 0
+   6   1          lcd1602_RS = 0;
+   7   1      
+   8   1          //写功能
+   9   1          lcd1602_RW = 0;
+  10   1      
+  11   1          //开始写入命令
+  12   1          lcd1602_E = 0;
+  13   1          delay_ms(1);
+  14   1      
+  15   1          LCD1602_DATAPORT = cmd;
+  16   1      
+  17   1          lcd1602_E = 1;
+  18   1      
+  19   1          lcd1602_E = 0;
+  20   1      }
+  21          
+  22          //写数据
+  23          void lcd1602_write_data(u8 dat){
+  24   1          //通过RS 设置写数据功能 1
+  25   1          lcd1602_RS = 1;
+  26   1      
+  27   1          //写功能
+  28   1          lcd1602_RW = 0;
+  29   1      
+  30   1          //开始写入数据
+  31   1          lcd1602_E = 0;
+  32   1          delay_ms(1);
+  33   1      
+  34   1          LCD1602_DATAPORT = dat;
+  35   1      
+  36   1          lcd1602_E = 1;
+  37   1      
+  38   1          lcd1602_E = 0;
+  39   1      }
+  40          
+  41          //显示初始化
+  42          void lcd1602_init(){
+  43   1          //先写命令
+  44   1          //功能指示命令
+  45   1          lcd1602_write_cmd(0x38);
+  46   1      
+  47   1          //显示开关控制指令
+  48   1          lcd1602_write_cmd(0x0c);
+  49   1      
+  50   1          //模式设置指令
+  51   1          lcd1602_write_cmd(0x06);
+  52   1      
+  53   1          //清屏指令
+  54   1          lcd1602_write_cmd(0x01);
+C51 COMPILER V9.60.0.0   LCD1602                                                           11/17/2022 14:15:24 PAGE 2   
+
+  55   1      }
+  56          
+  57          //显示字符
+  58          void lcd1602_show_string(u8 x, u8 y, u8 *str){
+  59   1          u8 i = 0;
+  60   1          
+  61   1          if (y > 1 || x > 15) return;
+  62   1      
+  63   1          if (y < 1){
+  64   2              while(*str != '\0'){
+  65   3                  if (i < 16 - x)
+  66   3                  lcd1602_write_cmd(0x80 + x + i);
+  67   3                  else
+  68   3                  lcd1602_write_cmd(0x80 + 0x40 + x + i - 16);
+  69   3      
+  70   3                  //写入显示内容
+  71   3                  lcd1602_write_data(*str);
+  72   3                  str ++;
+  73   3                  i ++;
+  74   3              }
+  75   2          }
+  76   1          else {
+  77   2              while(*str != '\0'){
+  78   3                  if (i < 16 - x)
+  79   3                  lcd1602_write_cmd(0x80 + 0x40 + x + i);
+  80   3                  else 
+  81   3                  lcd1602_write_cmd(0x80 + x + i - 16);
+  82   3      
+  83   3                  //写入显示内容
+  84   3                  lcd1602_write_data(*str);
+  85   3                  str ++;
+  86   3                  i ++;
+  87   3              }
+  88   2          }
+  89   1      }
+  90          
+  91          //清空屏幕指令
+  92          void lcd1602_clear(){
+  93   1          lcd1602_write_cmd(0x01);
+  94   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    239    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       7
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
